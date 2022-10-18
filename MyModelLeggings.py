@@ -1,11 +1,11 @@
-from Component import Component
+from MultiColorComponent import MultiColorComponent
 from MyModelFoot import MyModelFoot
 from Point import Point
 from Shapes import Cube, Sphere, Cylinder
 import ColorType as Ct
 
 
-class MyModelWaist(Component):
+class MyModelWaist(MultiColorComponent):
     """
     Waist Part
     - [x] Waist Base
@@ -16,6 +16,7 @@ class MyModelWaist(Component):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent
@@ -68,7 +69,7 @@ class MyModelWaist(Component):
             self.componentDict[f'left{k}'] = v
 
 
-class MyModelLeg(Component):
+class MyModelLeg(MultiColorComponent):
     """
     Leg Part
     - [x] Upper Leg
@@ -80,6 +81,7 @@ class MyModelLeg(Component):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, left_handed: bool = True):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent

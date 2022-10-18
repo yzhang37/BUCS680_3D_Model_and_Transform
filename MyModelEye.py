@@ -1,10 +1,10 @@
-from Component import Component
+from MultiColorComponent import MultiColorComponent
 from Point import Point
 import ColorType as Ct
 from Shapes import Sphere
 
 
-class MyModelEye(Component):
+class MyModelEye(MultiColorComponent):
     """
     Define the eye and eyeball.
     """
@@ -14,6 +14,7 @@ class MyModelEye(Component):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, eye_color=Ct.WHITE, eyeball_color=Ct.BLACK):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent

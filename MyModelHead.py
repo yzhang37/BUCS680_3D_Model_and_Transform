@@ -1,13 +1,13 @@
 import math
 
-from Component import Component
+from MultiColorComponent import MultiColorComponent
 from MyModelEye import MyModelEye
 from Point import Point
 import ColorType as Ct
 from Shapes import Sphere, Cube, Cylinder, Cone
 
 
-class MyModelHead(Component):
+class MyModelHead(MultiColorComponent):
     """
     Define the head part.
     - [x] Faces
@@ -21,6 +21,7 @@ class MyModelHead(Component):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent
@@ -112,10 +113,11 @@ class MyModelHead(Component):
             self.componentDict[f'left_{key}'] = value
 
 
-class MyModelMouth(Component):
+class MyModelMouth(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, mouth_amount=2, interval=0.1, depth=0.1):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent

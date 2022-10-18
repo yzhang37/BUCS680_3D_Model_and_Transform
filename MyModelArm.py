@@ -1,12 +1,10 @@
-from Component import Component
-from MyModelHead import MyModelHead
-from MyModelSaber import MyModelSaber
+from MultiColorComponent import MultiColorComponent
 from Point import Point
 from Shapes import Cube, Sphere, Cylinder
 import ColorType as Ct
 
 
-class MyModelArm(Component):
+class MyModelArm(MultiColorComponent):
     """
     - [x] Shoulder
     - [x] Shoulder Joint
@@ -20,6 +18,7 @@ class MyModelArm(Component):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, left_handed: bool = True):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent
@@ -90,7 +89,7 @@ class MyModelArm(Component):
         # TODO: add hand
 
 
-class MyModelShoulderPanel(Component):
+class MyModelShoulderPanel(MultiColorComponent):
     """
     - [x] Shoulder
     """
@@ -98,6 +97,7 @@ class MyModelShoulderPanel(Component):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent

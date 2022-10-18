@@ -1,13 +1,14 @@
-from Component import Component
 import ColorType as Ct
+from MultiColorComponent import MultiColorComponent
 from Point import Point
 from Shapes import Cube
 
 
-class MyModelFoot(Component):
+class MyModelFoot(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent
@@ -32,10 +33,11 @@ class MyModelFoot(Component):
         self.addChild(inner_bottom)
 
 
-class MyModelShoeCover(Component):
+class MyModelShoeCover(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, left_handed: bool = True):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent

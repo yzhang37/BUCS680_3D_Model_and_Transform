@@ -1,11 +1,10 @@
-from Component import Component
-from MyModelHead import MyModelHead
+from MultiColorComponent import MultiColorComponent
 from Point import Point
 from Shapes import Cylinder, Sphere
 import ColorType as Ct
 
 
-class MyModelSaber(Component):
+class MyModelSaber(MultiColorComponent):
     """
     - [x] Saber Slot (Sphere)
     - [x] Saber (Cylinder)
@@ -14,6 +13,7 @@ class MyModelSaber(Component):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
+        self.setDefaultColor(Ct.BLACK)
         self.componentList = []
         self.componentDict = {}
         self.contextParent = parent
