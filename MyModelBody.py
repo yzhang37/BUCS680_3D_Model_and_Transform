@@ -2,6 +2,7 @@ from Component import Component
 from MyModelArm import MyModelArm
 from MyModelHead import MyModelHead
 from MyModelSaber import MyModelSaber
+from MyModelWaist import MyModelWaist
 from Point import Point
 from Shapes import Cube, Sphere
 import ColorType as Ct
@@ -97,10 +98,6 @@ class MyModelBody(Component):
                        Ct.ColorType(80 / 255, 62 / 255, 89 / 255))
         body_part_1.addChild(jetpack)
 
-        # saber_slot = Sphere(Point((0, 0, 0)), shaderProg,
-        #                     [saber_slot_radius, saber_slot_radius, saber_slot_radius],
-        #                     , limb=False)
-
         # Saber Slot
         saber_slot_size = scale * 0.1
         slot1 = Sphere(
@@ -174,6 +171,17 @@ class MyModelBody(Component):
             self.componentDict[f'right_arm_{key}'] = value
         for key, value in left_arm.componentDict.items():
             self.componentDict[f'left_arm_{key}'] = value
+
+        # waist connection
+        waist_joint = Sphere(
+            Point((0, 0, -body1_height / 2)), shaderProg,
+            [saber_slot_size, saber_slot_size, saber_slot_size], Ct.GRAY)
+        body_part_1.addChild(waist_joint)
+
+        waist_part = MyModelWaist(self, Point((0, 0, 0)), shaderProg, scale=scale)
+        waist_joint.addChild(waist_part)
+        self.componentList.extend(waist_part.componentList)
+        self.componentDict.update(waist_part.componentDict)
 
 
 class MyModelOutlet(Component):
