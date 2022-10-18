@@ -40,7 +40,7 @@ class MyModelHead(Component):
         head_height = scale * 0.9
         head_part = Cube(Point((0, 0, neck_length)), shaderProg,
                          [head_length, head_thickness, head_height],
-                         Ct.ColorType(0.95, 0.95, 0.95))
+                         Ct.ColorType(0.88, 0.88, 0.88))
         neck_part.addChild(head_part)
 
         # define the horn

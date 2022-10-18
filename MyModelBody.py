@@ -1,7 +1,8 @@
 from Component import Component
 from MyModelHead import MyModelHead
+from MyModelSaber import MyModelSaber
 from Point import Point
-from Shapes import Cube
+from Shapes import Cube, Sphere
 import ColorType as Ct
 
 
@@ -9,7 +10,7 @@ class MyModelBody(Component):
     """
     Body Part
     - [x] Main Body
-    - [ ] Connect the head
+    - [x] Connect the head
     - [x] Jetpack
     - [ ] Saber Slot
     - [ ] Sabers
@@ -67,3 +68,46 @@ class MyModelBody(Component):
                        [jetpack_length, jetpack_thickness, jetpack_height],
                        Ct.ColorType(80 / 255, 62 / 255, 89 / 255))
         body_part_1.addChild(jetpack)
+
+        # Saber Slot
+        saber_slot_size = scale * 0.02
+        slot1 = Sphere(
+            Point((
+                -jetpack_length / 2 + saber_slot_size * 0.8,
+                jetpack_thickness / 4 - saber_slot_size / 2,
+                jetpack_height / 2)),
+            shaderProg,
+            [saber_slot_size, saber_slot_size, saber_slot_size], Ct.GRAY)
+        jetpack.addChild(slot1)
+        slot2 = Sphere(
+            Point((
+                jetpack_length / 2 - saber_slot_size * 0.8,
+                jetpack_thickness / 4 - saber_slot_size / 2,
+                jetpack_height / 2)),
+            shaderProg,
+            [saber_slot_size, saber_slot_size, saber_slot_size], Ct.GRAY)
+        jetpack.addChild(slot2)
+
+        left_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.1)
+        slot1.addChild(left_saber)
+        right_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.1)
+        slot2.addChild(right_saber)
+        self.componentList.extend(right_saber.componentList)
+        self.componentList.extend(left_saber.componentList)
+        for key, value in right_saber.componentDict.items():
+            self.componentDict[f'right_saber_{key}'] = value
+        for key, value in left_saber.componentDict.items():
+            self.componentDict[f'left_saber_{key}'] = value
+
+        left_saber_joint = self.componentDict[f'left_saber_joint']
+        right_saber_joint = self.componentDict[f'right_saber_joint']
+
+        left_saber_joint.setDefaultAngle(-20, left_saber_joint.vAxis)
+        left_saber_joint.setRotateExtent(left_saber_joint.uAxis, -50, 20)
+        left_saber_joint.setRotateExtent(left_saber_joint.vAxis, -80, 20)
+        left_saber_joint.setRotateExtent(left_saber_joint.wAxis, 0, 0)
+
+        right_saber_joint.setDefaultAngle(20, right_saber_joint.vAxis)
+        right_saber_joint.setRotateExtent(right_saber_joint.uAxis, -50, 20)
+        right_saber_joint.setRotateExtent(right_saber_joint.vAxis, -20, 80)
+        right_saber_joint.setRotateExtent(right_saber_joint.wAxis, 0, 0)
