@@ -13,7 +13,7 @@ class MyModelArm(Component):
     - [x] Upper Arm
     - [x] Arm Joint
     - [x] Lower Arm
-    - [ ] Hand Joint
+    - [x] Hand Joint
     - [ ] Hand
     """
 
@@ -86,6 +86,14 @@ class MyModelArm(Component):
         lower_arm.setRotateExtent(lower_arm.uAxis, -180, 90)
         lower_arm.setRotateExtent(lower_arm.vAxis, 0, 0)
         lower_arm.setRotateExtent(lower_arm.wAxis, 0, 0)
+
+        # hand joint
+        hand_joint_radius = joint_radius * 0.7
+        hand_joint = Sphere(Point((0, 0, -upper_arm_height / 2)), shaderProg,
+                                [hand_joint_radius, hand_joint_radius, hand_joint_radius],
+                                Ct.ColorType(0.4, 0.4, 0.4))
+        lower_arm.addChild(hand_joint)
+        # TODO: add hand
 
 
 class MyModelShoulderPanel(Component):
