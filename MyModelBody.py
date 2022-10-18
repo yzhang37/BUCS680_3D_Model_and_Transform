@@ -43,9 +43,36 @@ class MyModelBody(Component):
                            Ct.BLUE)
         self.addChild(body_part_2)
 
+        # define neck_platform and chest
         neck_platform_length = body2_length * 0.4
         neck_platform_thickness = body2_thickness * 1.1
         neck_platform_height = body2_length * 0.1
+
+        body_3_helper = Cube(Point((0, -body1_thickness * 0.4, body1_height * 0.08)), shaderProg, [neck_platform_length * 0.001] * 3, Ct.BLUE)
+        self.addChild(body_3_helper)
+
+        body3_height = body2_height * 1.41
+        body_part_3 = Cube(Point((
+            0, 0, 0)), shaderProg, [neck_platform_length * 0.8, neck_platform_thickness * 0.7, body3_height],
+            Ct.BLUE)
+        body_part_3.setDefaultAngle(35, body_part_3.uAxis)
+        body_3_helper.addChild(body_part_3)
+        body4_height = body2_thickness * 0.5
+        body4_thickness = body2_height * 0.7
+        body_part_4 = Cube(Point((0, 0, body3_height / 2 - body4_height / 2)),
+                           shaderProg, [body2_length, body4_thickness, body4_height],
+                           Ct.BLUE)
+        body_part_3.addChild(body_part_4)
+        # two outlets control
+        outlet1 = MyModelOutlet(self, Point(
+            (-body2_length / 2 + 0.18 * scale,
+             -body4_thickness * 0.48, 0)), shaderProg, scale=0.28 * scale)
+        body_part_4.addChild(outlet1)
+        outlet2 = MyModelOutlet(self, Point(
+            (body2_length / 2 - 0.18 * scale,
+             -body4_thickness * 0.48, 0)), shaderProg, scale=0.28 * scale)
+        body_part_4.addChild(outlet2)
+
         neck_platform = Cube(Point((0, 0, body2_height / 2 - neck_platform_height * 0.48)), shaderProg,
                              [neck_platform_length, neck_platform_thickness, neck_platform_height],
                              Ct.ColorType(217 / 255, 166 / 255, 82 / 255))
@@ -147,3 +174,24 @@ class MyModelBody(Component):
             self.componentDict[f'right_arm_{key}'] = value
         for key, value in left_arm.componentDict.items():
             self.componentDict[f'left_arm_{key}'] = value
+
+
+class MyModelOutlet(Component):
+    def __init__(self, parent, position, shaderProg, display_obj=None,
+                 scale=1.0):
+        super().__init__(position, display_obj)
+        self.componentList = []
+        self.componentDict = {}
+        self.contextParent = parent
+
+        num = 4
+        r_bgn, g_bgn, b_bgn = [180 / 255, 146 / 255, 90 / 255]
+        r_end, g_end, b_end = [217 / 255, 166 / 255, 82 / 255]
+        for i in range(num):
+            height = - scale * 2 / num + scale / num * i
+            t = i / (num - 1)
+            self.addChild(
+                Cube(Point((0, 0, height)), shaderProg, [scale, scale / 2, scale * 0.05],
+                     Ct.ColorType((1 - t) * r_bgn + t * r_end,
+                                  (1 - t) * g_bgn + t * g_end,
+                                  (1 - t) * b_bgn + t * b_end)))
