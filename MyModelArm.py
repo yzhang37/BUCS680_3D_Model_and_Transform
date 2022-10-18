@@ -29,13 +29,12 @@ class MyModelArm(Component):
                                 [joint_radius, joint_radius, joint_radius],
                                 Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
         self.addChild(shoulder_joint)
-        self.componentList.append(shoulder_joint)
-        self.componentDict['shoulder_joint'] = shoulder_joint
-        if not left_handed:
-            shoulder_joint.setRotateExtent(shoulder_joint.vAxis, -10, 95)
-        else:
-            shoulder_joint.setRotateExtent(shoulder_joint.vAxis, -95, 10)
-        shoulder_joint.setRotateExtent(shoulder_joint.wAxis, 0, 0)
+        # self.componentList.append(shoulder_joint)
+        # self.componentDict['shoulder_joint'] = shoulder_joint
+        # if not left_handed:
+        #
+        # else:
+        # shoulder_joint.setRotateExtent(shoulder_joint.wAxis, 0, 0)
 
         shoulder_panel = MyModelShoulderPanel(self, Point((0, 0, 0)), shaderProg, scale=scale)
         self.addChild(shoulder_panel)
@@ -59,10 +58,13 @@ class MyModelArm(Component):
         shoulder_joint.addChild(upper_arm)
         self.componentList.append(upper_arm)
         self.componentDict['upper_arm'] = upper_arm
-        upper_arm.setRotateExtent(upper_arm.uAxis, 0, 0)
-        upper_arm.setRotateExtent(upper_arm.vAxis, 0, 0)
+        upper_arm.setRotateExtent(upper_arm.uAxis, -180, 180)
+        if not left_handed:
+            upper_arm.setRotateExtent(upper_arm.vAxis, -10, 95)
+        else:
+            upper_arm.setRotateExtent(upper_arm.vAxis, -95, 10)
 
-        # arm joint
+    # arm joint
         small_joint_radius = joint_radius * 1.2
         arm_joint_part = Sphere(Point((0, 0, -upper_arm_height / 2 - small_joint_radius / 2)), shaderProg,
                                 [small_joint_radius, small_joint_radius, small_joint_radius],
