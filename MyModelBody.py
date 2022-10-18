@@ -16,7 +16,7 @@ class MyModelBody(Component):
     - [x] Jetpack
     - [x] Saber Slot
     - [x] Sabers
-    - [ ] Shoulder Part
+    - [x] Shoulder Part
 
     """
 
@@ -74,9 +74,11 @@ class MyModelBody(Component):
              -body4_thickness * 0.48, 0)), shaderProg, scale=0.28 * scale)
         body_part_4.addChild(outlet2)
 
+        color_gundam_yellow = Ct.ColorType(217 / 255, 166 / 255, 82 / 255)
+
         neck_platform = Cube(Point((0, 0, body2_height / 2 - neck_platform_height * 0.48)), shaderProg,
                              [neck_platform_length, neck_platform_thickness, neck_platform_height],
-                             Ct.ColorType(217 / 255, 166 / 255, 82 / 255))
+                             color_gundam_yellow)
         body_part_2.addChild(neck_platform)
 
         # Connect the neck
@@ -89,14 +91,26 @@ class MyModelBody(Component):
             self.componentDict[f'head_{key}'] = value
 
         # Jetpack
+        color_medium_gray = Ct.ColorType(80 / 255, 62 / 255, 89 / 255)
+        color_deep_gray = Ct.ColorType(69 / 255, 58 / 255, 74 / 255)
         jetpack_length = body1_length * 0.9
         jetpack_thickness = body2_thickness * 0.4
         jetpack_height = body1_height * 0.8
         jetpack = Cube(Point((0, body1_thickness / 2 + jetpack_thickness / 2,
                               body1_height / 2 - jetpack_height * 0.48)), shaderProg,
                        [jetpack_length, jetpack_thickness, jetpack_height],
-                       Ct.ColorType(80 / 255, 62 / 255, 89 / 255))
+                       color_medium_gray)
         body_part_1.addChild(jetpack)
+
+        # add two connection points of jet
+        jet_joint1 = Sphere(Point((
+            jetpack_length / 4, jetpack_thickness / 2, -jetpack_height / 2)),
+            shaderProg, [jetpack_length * 0.08] * 3, color_deep_gray)
+        jetpack.addChild(jet_joint1)
+        jet_joint2 = Sphere(Point((
+            -jetpack_length / 4, jetpack_thickness / 2, -jetpack_height / 2)),
+            shaderProg, [jetpack_length * 0.08] * 3, color_deep_gray)
+        jetpack.addChild(jet_joint2)
 
         # Saber Slot
         saber_slot_size = scale * 0.1
@@ -107,7 +121,7 @@ class MyModelBody(Component):
                 jetpack_height / 2)),
             shaderProg,
             [saber_slot_size, saber_slot_size, saber_slot_size],
-            Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+            color_deep_gray)
         jetpack.addChild(slot1)
         slot2 = Sphere(
             Point((
@@ -116,7 +130,7 @@ class MyModelBody(Component):
                 jetpack_height / 2)),
             shaderProg,
             [saber_slot_size, saber_slot_size, saber_slot_size],
-            Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+            color_deep_gray)
         jetpack.addChild(slot2)
 
         right_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=saber_slot_size)
