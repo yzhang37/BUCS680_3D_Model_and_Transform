@@ -89,10 +89,10 @@ class MyModelBody(Component):
             [saber_slot_size, saber_slot_size, saber_slot_size], Ct.GRAY)
         jetpack.addChild(slot2)
 
-        left_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.1)
-        slot1.addChild(left_saber)
         right_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.1)
-        slot2.addChild(right_saber)
+        slot1.addChild(right_saber)
+        left_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.1)
+        slot2.addChild(left_saber)
         self.componentList.extend(right_saber.componentList)
         self.componentList.extend(left_saber.componentList)
         for key, value in right_saber.componentDict.items():
@@ -100,18 +100,18 @@ class MyModelBody(Component):
         for key, value in left_saber.componentDict.items():
             self.componentDict[f'left_saber_{key}'] = value
 
-        left_saber_joint = self.componentDict[f'left_saber_joint']
         right_saber_joint = self.componentDict[f'right_saber_joint']
+        left_saber_joint = self.componentDict[f'left_saber_joint']
 
-        left_saber_joint.setDefaultAngle(-20, left_saber_joint.vAxis)
-        left_saber_joint.setRotateExtent(left_saber_joint.uAxis, -50, 20)
-        left_saber_joint.setRotateExtent(left_saber_joint.vAxis, -80, 20)
-        left_saber_joint.setRotateExtent(left_saber_joint.wAxis, 0, 0)
-
-        right_saber_joint.setDefaultAngle(20, right_saber_joint.vAxis)
+        right_saber_joint.setDefaultAngle(-20, right_saber_joint.vAxis)
         right_saber_joint.setRotateExtent(right_saber_joint.uAxis, -50, 20)
-        right_saber_joint.setRotateExtent(right_saber_joint.vAxis, -20, 80)
+        right_saber_joint.setRotateExtent(right_saber_joint.vAxis, -80, 20)
         right_saber_joint.setRotateExtent(right_saber_joint.wAxis, 0, 0)
+
+        left_saber_joint.setDefaultAngle(20, left_saber_joint.vAxis)
+        left_saber_joint.setRotateExtent(left_saber_joint.uAxis, -50, 20)
+        left_saber_joint.setRotateExtent(left_saber_joint.vAxis, -20, 80)
+        left_saber_joint.setRotateExtent(right_saber_joint.wAxis, 0, 0)
 
         # rib framework
         rib_length = body2_length * 1.5

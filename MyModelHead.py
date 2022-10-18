@@ -86,10 +86,6 @@ class MyModelHead(Component):
                           eye_color=Ct.BLACK,
                           eyeball_color=Ct.ColorType(217 / 255, 166 / 255, 82 / 255))
         head_part.addChild(eye1)
-        self.componentList.extend(eye1.componentList)
-        for key, value in eye1.componentDict.items():
-            self.componentDict[f'right_{key}'] = value
-
         eye2 = MyModelEye(self, Point((-head_length * 0.12,
                                        -head_thickness * 0.29 + eye_scale * 0.3,
                                        head_height * 0.08)),
@@ -97,6 +93,10 @@ class MyModelHead(Component):
                           eye_color=Ct.BLACK,
                           eyeball_color=Ct.ColorType(217 / 255, 166 / 255, 82 / 255))
         head_part.addChild(eye2)
+
         self.componentList.extend(eye2.componentList)
         for key, value in eye2.componentDict.items():
+            self.componentDict[f'right_{key}'] = value
+        self.componentList.extend(eye1.componentList)
+        for key, value in eye1.componentDict.items():
             self.componentDict[f'left_{key}'] = value
