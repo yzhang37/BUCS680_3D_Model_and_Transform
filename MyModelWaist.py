@@ -1,6 +1,6 @@
 from Component import Component
 from Point import Point
-from Shapes import Cube
+from Shapes import Cube, Sphere
 import ColorType as Ct
 
 
@@ -28,3 +28,21 @@ class MyModelWaist(Component):
 
         self.componentList.append(waist_base)
         self.componentDict['waist'] = waist_base
+
+        # rib of the waist
+        rib_length = waist_base_length * 2
+        rib_thickness = waist_base_thickness * 0.1
+        rib_height = waist_base_height * 0.1
+        rib_part = Cube(Point((0, 0, 0)), shaderProg,
+                        [rib_length, rib_thickness, rib_height], Ct.GRAY)
+        waist_base.addChild(rib_part)
+
+        rib_joint_radius = scale * 0.15
+        leg_joint1 = Sphere(
+            Point((rib_length / 2, 0, 0)), shaderProg,
+            [rib_joint_radius, rib_joint_radius, rib_joint_radius], Ct.GRAY, limb=False)
+        rib_part.addChild(leg_joint1)
+        leg_joint2 = Sphere(
+            Point((-rib_length / 2, 0, 0)), shaderProg,
+            [rib_joint_radius, rib_joint_radius, rib_joint_radius], Ct.GRAY, limb=False)
+        rib_part.addChild(leg_joint2)
