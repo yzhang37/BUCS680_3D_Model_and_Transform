@@ -2,7 +2,7 @@ from Component import Component
 from MyModelArm import MyModelArm
 from MyModelHead import MyModelHead
 from MyModelSaber import MyModelSaber
-from MyModelWaist import MyModelWaist
+from MyModelLeggings import MyModelWaist
 from Point import Point
 from Shapes import Cube, Sphere
 import ColorType as Ct

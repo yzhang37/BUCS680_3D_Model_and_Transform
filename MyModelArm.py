@@ -29,12 +29,6 @@ class MyModelArm(Component):
                                 [joint_radius, joint_radius, joint_radius],
                                 Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
         self.addChild(shoulder_joint)
-        # self.componentList.append(shoulder_joint)
-        # self.componentDict['shoulder_joint'] = shoulder_joint
-        # if not left_handed:
-        #
-        # else:
-        # shoulder_joint.setRotateExtent(shoulder_joint.wAxis, 0, 0)
 
         shoulder_panel = MyModelShoulderPanel(self, Point((0, 0, 0)), shaderProg, scale=scale)
         self.addChild(shoulder_panel)
