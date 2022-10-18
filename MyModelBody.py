@@ -135,3 +135,9 @@ class MyModelBody(Component):
         shoulder_slot1.addChild(left_arm)
         right_arm = MyModelArm(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.5, left_handed=False)
         shoulder_slot2.addChild(right_arm)
+        self.componentList.extend(right_arm.componentList)
+        self.componentList.extend(left_arm.componentList)
+        for key, value in right_arm.componentDict.items():
+            self.componentDict[f'right_arm_{key}'] = value
+        for key, value in left_arm.componentDict.items():
+            self.componentDict[f'left_arm_{key}'] = value
