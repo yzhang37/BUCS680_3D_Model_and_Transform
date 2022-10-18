@@ -145,7 +145,6 @@ class Sketch(CanvasBase):
         self.shaderProg = GLProgram()
         self.shaderProg.compile()
 
-        ##### TODO 3: Initialize your model
         # You should initialize your model here.
         # self.topLevelComponent should refer to your model
         # and self.components should refer to your model's components.
