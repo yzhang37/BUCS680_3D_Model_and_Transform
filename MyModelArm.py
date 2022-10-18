@@ -11,8 +11,8 @@ class MyModelArm(Component):
     - [x] Shoulder
     - [x] Shoulder Joint
     - [x] Upper Arm
-    - [ ] Arm Joint
-    - [ ] Lower Arm
+    - [x] Arm Joint
+    - [x] Lower Arm
     - [ ] Hand Joint
     - [ ] Hand
     """
@@ -64,19 +64,28 @@ class MyModelArm(Component):
         else:
             upper_arm.setRotateExtent(upper_arm.vAxis, -95, 10)
 
-    # arm joint
-        small_joint_radius = joint_radius * 1.2
-        arm_joint_part = Sphere(Point((0, 0, -upper_arm_height / 2 - small_joint_radius / 2)), shaderProg,
-                                [small_joint_radius, small_joint_radius, small_joint_radius],
+        # arm joint
+        hidden_joint_radius = joint_radius * 1.2
+        arm_joint_helper = Sphere(Point((0, 0, -upper_arm_height / 2 - hidden_joint_radius / 2)), shaderProg,
+                                [joint_radius * 0.01, joint_radius * 0.01, joint_radius * 0.01],
                                 Ct.ColorType(0.7, 0.7, 0.7))
-        upper_arm.addChild(arm_joint_part)
+        upper_arm.addChild(arm_joint_helper)
 
-        lower_arm = Cube(Point((0, 0, -upper_arm_height / 2 - small_joint_radius / 2)), shaderProg,
+        arm_joint_part = Cylinder(Point((0, 0, 0)), shaderProg,
+                                  [joint_radius, joint_radius, arm_thickness1 / 2],
+                                  Ct.ColorType(0.7, 0.7, 0.7))
+        arm_joint_part.setDefaultAngle(90, arm_joint_part.vAxis)
+        arm_joint_helper.addChild(arm_joint_part)
+
+        lower_arm = Cube(Point((0, 0, -upper_arm_height / 2 - hidden_joint_radius / 2)), shaderProg,
                          [arm_thickness1, arm_thickness2, upper_arm_height],
                          Ct.ColorType(0.85, 0.85, 0.85))
-        arm_joint_part.addChild(lower_arm)
+        arm_joint_helper.addChild(lower_arm)
         self.componentList.append(lower_arm)
         self.componentDict['lower_arm'] = lower_arm
+        lower_arm.setRotateExtent(lower_arm.uAxis, -180, 90)
+        lower_arm.setRotateExtent(lower_arm.vAxis, 0, 0)
+        lower_arm.setRotateExtent(lower_arm.wAxis, 0, 0)
 
 
 class MyModelShoulderPanel(Component):
