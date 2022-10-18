@@ -126,6 +126,9 @@ class MyModelLeg(Component):
         leg_joint_helper.addChild(lower_leg)
         self.componentList.append(lower_leg)
         self.componentDict['leg_lower'] = lower_leg
+        lower_leg.setRotateExtent(lower_leg.uAxis, -5, 140)
+        lower_leg.setRotateExtent(lower_leg.vAxis, 0, 0)
+        lower_leg.setRotateExtent(lower_leg.wAxis, 0, 0)
 
         # leg joint part1 - part3
         joint_radius = scale * 0.15
