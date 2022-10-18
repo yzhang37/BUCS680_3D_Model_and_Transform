@@ -12,6 +12,9 @@ import GLUtility
 import ColorType
 import numpy as np
 
+from Point import Point
+
+
 def getVertexData(filename):
 
     colladaData = Collada(filename)
@@ -106,7 +109,7 @@ class Cube(Shape):
     vertices = data[0]
     indices = data[1]
 
-    def __init__(self, position, shaderProg, scale, color=ColorType.RED):
+    def __init__(self, position: Point, shaderProg, scale, color: ColorType=ColorType.RED):
         """
         :param position: location of the object
         :type position: Point
@@ -171,7 +174,7 @@ class Sphere(Shape):
     indices = data[1]
     indicesLP = dataLP[1]
 
-    def __init__(self, position, shaderProg, scale, color=ColorType.BLUE, limb=True, lowPoly=False):
+    def __init__(self, position: Point, shaderProg, scale, color: ColorType.ColorType=ColorType.BLUE, limb=True, lowPoly=False):
         """
         :param position: location of the object
         :type position: Point
