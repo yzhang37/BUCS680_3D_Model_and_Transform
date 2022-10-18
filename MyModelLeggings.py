@@ -1,6 +1,7 @@
 from Component import Component
+from MyModelFoot import MyModelFoot
 from Point import Point
-from Shapes import Cube, Sphere
+from Shapes import Cube, Sphere, Cylinder
 import ColorType as Ct
 
 
@@ -67,10 +68,12 @@ class MyModelLeg(Component):
         self.componentDict = {}
         self.contextParent = parent
 
+        slight_degree = 2.5
+
         # upper_leg
         leg_thickness1 = scale * 0.4
         leg_thickness2 = scale * 0.4
-        leg_height = scale * 0.9
+        leg_height = scale * 1
         upper_leg = Cube(Point((0, 0, -leg_height / 2)), shaderProg,
                          [leg_thickness1, leg_thickness2, leg_height],
                          Ct.ColorType(0.85, 0.85, 0.85))
@@ -81,5 +84,60 @@ class MyModelLeg(Component):
         upper_leg.setRotateExtent(upper_leg.wAxis, 0, 0)
         if not left_handed:
             upper_leg.setRotateExtent(upper_leg.vAxis, 0, 89)
+            upper_leg.setDefaultAngle(slight_degree, upper_leg.vAxis)
         else:
             upper_leg.setRotateExtent(upper_leg.vAxis, -89, 0)
+            upper_leg.setDefaultAngle(-slight_degree, upper_leg.vAxis)
+
+        # arm joint
+        cylinder_radius = scale * 0.2
+        leg_joint_helper = Sphere(Point((0, 0, -leg_height / 2 - cylinder_radius / 2)), shaderProg,
+                                  [cylinder_radius * 0.01] * 3,
+                                  Ct.ColorType(0.7, 0.7, 0.7))
+        upper_leg.addChild(leg_joint_helper)
+
+        leg_joint_part = Cylinder(Point((0, 0, 0)), shaderProg,
+                                  [cylinder_radius, cylinder_radius, leg_thickness2 / 2],
+                                  Ct.ColorType(0.7, 0.7, 0.7))
+        leg_joint_part.setDefaultAngle(90, leg_joint_part.vAxis)
+        leg_joint_helper.addChild(leg_joint_part)
+
+        # lower_leg
+        lower_leg = Cube(Point((0, 0, -leg_height / 2 - cylinder_radius / 2)), shaderProg,
+                         [leg_thickness1, leg_thickness2, leg_height],
+                         Ct.ColorType(0.85, 0.85, 0.85))
+        leg_joint_helper.addChild(lower_leg)
+        self.componentList.append(lower_leg)
+        self.componentDict['leg_lower'] = lower_leg
+
+        # leg joint part1 - part3
+        joint_radius = scale * 0.15
+        foot_joint1 = Sphere(Point((0, 0, -leg_height * 0.5)), shaderProg,
+                                [joint_radius, joint_radius, joint_radius],
+                                Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+        lower_leg.addChild(foot_joint1)
+
+        joint2_height = leg_height * 0.3
+        foot_joint2 = Cube(Point((
+            0, 0, -joint_radius / 2)), shaderProg,
+            [leg_thickness1 * 0.2, leg_thickness2 * 0.2, joint2_height],
+            Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+        foot_joint1.addChild(foot_joint2)
+
+        foot_joint3 = Sphere(Point((0, 0, -joint2_height + joint_radius / 2)), shaderProg,
+                            [joint_radius, joint_radius, joint_radius],
+                            Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+        foot_joint2.addChild(foot_joint3)
+
+        # add the foot
+        foot_part = MyModelFoot(parent, Point((0, 0, 0)), shaderProg, scale=scale * 0.5)
+        foot_joint3.addChild(foot_part)
+        if not left_handed:
+            foot_part.setDefaultAngle(-slight_degree, upper_leg.vAxis)
+        else:
+            foot_part.setDefaultAngle(slight_degree, upper_leg.vAxis)
+        self.componentList.append(foot_part)
+        self.componentDict['foot'] = foot_part
+        foot_part.setRotateExtent(foot_part.uAxis, -45, 45)
+        foot_part.setRotateExtent(foot_part.vAxis, -45, 45)
+        foot_part.setRotateExtent(foot_part.wAxis, -90, 90)
