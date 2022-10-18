@@ -2,7 +2,7 @@ from Component import Component
 from MyModelHead import MyModelHead
 from MyModelSaber import MyModelSaber
 from Point import Point
-from Shapes import Cube, Sphere
+from Shapes import Cube, Sphere, Cylinder
 import ColorType as Ct
 
 
@@ -34,7 +34,7 @@ class MyModelArm(Component):
         if not left_handed:
             shoulder_joint.setRotateExtent(shoulder_joint.vAxis, -10, 95)
         else:
-            shoulder_joint.setRotateExtent(shoulder_joint.vAxis, 10, -95)
+            shoulder_joint.setRotateExtent(shoulder_joint.vAxis, -95, 10)
         shoulder_joint.setRotateExtent(shoulder_joint.wAxis, 0, 0)
 
         shoulder_panel = MyModelShoulderPanel(self, Point((0, 0, 0)), shaderProg, scale=scale)
@@ -52,7 +52,7 @@ class MyModelArm(Component):
         # upper arm that can rotate w-axis
         arm_thickness1 = scale * 0.55
         arm_thickness2 = scale * 0.4
-        upper_arm_height = scale * 1.4
+        upper_arm_height = scale * 0.9
         upper_arm = Cube(Point((0, 0, -upper_arm_height / 2)), shaderProg,
                          [arm_thickness1, arm_thickness2, upper_arm_height],
                          Ct.ColorType(0.85, 0.85, 0.85))
@@ -62,6 +62,19 @@ class MyModelArm(Component):
         upper_arm.setRotateExtent(upper_arm.uAxis, 0, 0)
         upper_arm.setRotateExtent(upper_arm.vAxis, 0, 0)
 
+        # arm joint
+        small_joint_radius = joint_radius * 1.2
+        arm_joint_part = Sphere(Point((0, 0, -upper_arm_height / 2 - small_joint_radius / 2)), shaderProg,
+                                [small_joint_radius, small_joint_radius, small_joint_radius],
+                                Ct.ColorType(0.7, 0.7, 0.7))
+        upper_arm.addChild(arm_joint_part)
+
+        lower_arm = Cube(Point((0, 0, -upper_arm_height / 2 - small_joint_radius / 2)), shaderProg,
+                         [arm_thickness1, arm_thickness2, upper_arm_height],
+                         Ct.ColorType(0.85, 0.85, 0.85))
+        arm_joint_part.addChild(lower_arm)
+        self.componentList.append(lower_arm)
+        self.componentDict['lower_arm'] = lower_arm
 
 
 class MyModelShoulderPanel(Component):
