@@ -6,6 +6,13 @@ import ColorType as Ct
 
 
 class MyModelWaist(Component):
+    """
+    Waist Part
+    - [x] Waist Base
+    - [x] Waist Rib Framework for Legs
+    - [x] Connect to the Leg
+    """
+
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
@@ -56,11 +63,20 @@ class MyModelWaist(Component):
         self.componentList.extend(leg_right.componentList)
         self.componentList.extend(leg_left.componentList)
         for k, v in leg_right.componentDict.items():
-            self.componentDict[f'right{ k }'] = v
+            self.componentDict[f'right{k}'] = v
         for k, v in leg_left.componentDict.items():
-            self.componentDict[f'left{ k }'] = v
+            self.componentDict[f'left{k}'] = v
+
 
 class MyModelLeg(Component):
+    """
+    Leg Part
+    - [x] Upper Leg
+    - [x] Joints between the upper and lower
+    - [x] Lower Leg
+    - [x] Joints between the lower and foot
+    - [x] Connect to the Foot
+    """
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, left_handed: bool = True):
         super().__init__(position, display_obj)
@@ -81,13 +97,14 @@ class MyModelLeg(Component):
         self.componentList.append(upper_leg)
         self.componentDict['leg_upper'] = upper_leg
         upper_leg.setRotateExtent(upper_leg.uAxis, -110, 89)
-        upper_leg.setRotateExtent(upper_leg.wAxis, 0, 0)
         if not left_handed:
             upper_leg.setRotateExtent(upper_leg.vAxis, 0, 89)
             upper_leg.setDefaultAngle(slight_degree, upper_leg.vAxis)
+            upper_leg.setRotateExtent(upper_leg.wAxis, -90, 0)
         else:
             upper_leg.setRotateExtent(upper_leg.vAxis, -89, 0)
             upper_leg.setDefaultAngle(-slight_degree, upper_leg.vAxis)
+            upper_leg.setRotateExtent(upper_leg.wAxis, 0, 90)
 
         # arm joint
         cylinder_radius = scale * 0.2
@@ -109,12 +126,15 @@ class MyModelLeg(Component):
         leg_joint_helper.addChild(lower_leg)
         self.componentList.append(lower_leg)
         self.componentDict['leg_lower'] = lower_leg
+        lower_leg.setRotateExtent(lower_leg.uAxis, -5, 140)
+        lower_leg.setRotateExtent(lower_leg.vAxis, 0, 0)
+        lower_leg.setRotateExtent(lower_leg.wAxis, 0, 0)
 
         # leg joint part1 - part3
         joint_radius = scale * 0.15
         foot_joint1 = Sphere(Point((0, 0, -leg_height * 0.5)), shaderProg,
-                                [joint_radius, joint_radius, joint_radius],
-                                Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+                             [joint_radius, joint_radius, joint_radius],
+                             Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
         lower_leg.addChild(foot_joint1)
 
         joint2_height = leg_height * 0.3
@@ -125,8 +145,8 @@ class MyModelLeg(Component):
         foot_joint1.addChild(foot_joint2)
 
         foot_joint3 = Sphere(Point((0, 0, -joint2_height + joint_radius / 2)), shaderProg,
-                            [joint_radius, joint_radius, joint_radius],
-                            Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+                             [joint_radius, joint_radius, joint_radius],
+                             Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
         foot_joint2.addChild(foot_joint3)
 
         # add the foot
