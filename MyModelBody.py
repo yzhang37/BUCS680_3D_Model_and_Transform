@@ -1,4 +1,5 @@
 from Component import Component
+from MyModelArm import MyModelArm
 from MyModelHead import MyModelHead
 from MyModelSaber import MyModelSaber
 from Point import Point
@@ -12,8 +13,8 @@ class MyModelBody(Component):
     - [x] Main Body
     - [x] Connect the head
     - [x] Jetpack
-    - [ ] Saber Slot
-    - [ ] Sabers
+    - [x] Saber Slot
+    - [x] Sabers
     - [ ] Shoulder Part
 
     """
@@ -111,3 +112,26 @@ class MyModelBody(Component):
         right_saber_joint.setRotateExtent(right_saber_joint.uAxis, -50, 20)
         right_saber_joint.setRotateExtent(right_saber_joint.vAxis, -20, 80)
         right_saber_joint.setRotateExtent(right_saber_joint.wAxis, 0, 0)
+
+        # rib framework
+        rib_length = body2_length * 1.5
+        rib_thickness = body1_thickness * 0.1
+        rib_height = body1_height * 0.1
+        rib_part = Cube(Point((0, 0, 0)), shaderProg,
+                        [rib_length, rib_thickness, rib_height], Ct.GRAY)
+        body_part_2.addChild(rib_part)
+
+        shoulder_slot1 = Sphere(
+            Point((rib_length / 2, 0, 0)), shaderProg,
+            [saber_slot_size, saber_slot_size, saber_slot_size], Ct.GRAY)
+        rib_part.addChild(shoulder_slot1)
+        shoulder_slot2 = Sphere(
+            Point((-rib_length / 2, 0, 0)), shaderProg,
+            [saber_slot_size, saber_slot_size, saber_slot_size], Ct.GRAY)
+        rib_part.addChild(shoulder_slot2)
+
+        # shoulder connection
+        left_arm = MyModelArm(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.5, left_handed=True)
+        shoulder_slot1.addChild(left_arm)
+        right_arm = MyModelArm(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.5, left_handed=False)
+        shoulder_slot2.addChild(right_arm)

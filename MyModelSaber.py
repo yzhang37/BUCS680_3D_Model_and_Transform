@@ -21,7 +21,8 @@ class MyModelSaber(Component):
         # define saber slot
         saber_slot_radius = scale
         saber_slot = Sphere(Point((0, 0, 0)), shaderProg,
-                            [saber_slot_radius, saber_slot_radius, saber_slot_radius], Ct.GRAY, limb=False)
+                            [saber_slot_radius, saber_slot_radius, saber_slot_radius],
+                            Ct.ColorType(69 / 255, 58 / 255, 74 / 255), limb=False)
         self.addChild(saber_slot)
         self.componentList.append(saber_slot)
         self.componentDict['joint'] = saber_slot
