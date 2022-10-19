@@ -55,7 +55,7 @@ class MyModelHand(MultiColorComponent):
 
         if not left_handed:
             joint_part.setRotateExtent(joint_part.vAxis, -5, 15)
-            joint_part.setRotateExtent(joint_part.wAxis, -90, 45)
+            joint_part.setRotateExtent(joint_part.wAxis, -95, 45)
 
             palm_part.setRotateExtent(joint_part.vAxis, -5, 15)
 
@@ -101,7 +101,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'little_{k}'] = v
 
             # thumb finger rotation limit
-            thumb_finger_part.setPartRotateExtent(0, 0, -90, 0)
+            thumb_finger_part.setPartRotateExtent(0, 0, -89, 0)
             thumb_finger_part.setPartRotateExtent(0, vAxis, -30, 30)
             thumb_finger_part.setPartRotateExtent(0, wAxis, 0, 0)
 
@@ -158,12 +158,12 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'little_{k}'] = v
 
             # thumb finger rotation limit
-            thumb_finger_part.setPartRotateExtent(0, uAxis, -90, 0)
-            thumb_finger_part.setPartRotateExtent(0, vAxis, -30, 30)
+            thumb_finger_part.setPartRotateExtent(0, uAxis, -89, 10)
+            thumb_finger_part.setPartRotateExtent(0, vAxis, -45, 45)
             thumb_finger_part.setPartRotateExtent(0, wAxis, 0, 0)
 
             thumb_finger_part.setPartRotateExtent(1, uAxis, 0, 0)
-            thumb_finger_part.setPartRotateExtent(1, vAxis, -90, 0)
+            thumb_finger_part.setPartRotateExtent(1, vAxis, -89, 10)
             thumb_finger_part.setPartRotateExtent(1, wAxis, 0, 0)
 
         self.thumb_finger = thumb_finger_part
@@ -173,53 +173,53 @@ class MyModelHand(MultiColorComponent):
         self.little_finger = little_finger_part
 
         # index finger rotation limit
-        index_finger_part.setPartRotateExtent(0, uAxis, -90, 0)
+        index_finger_part.setPartRotateExtent(0, uAxis, -89, 0)
         index_finger_part.setPartRotateExtent(0, vAxis, -5, 5)
         index_finger_part.setPartRotateExtent(0, wAxis, 0, 0)
 
-        index_finger_part.setPartRotateExtent(1, uAxis, -90, 0)
+        index_finger_part.setPartRotateExtent(1, uAxis, -89, 0)
         index_finger_part.setPartRotateExtent(1, vAxis, 0, 0)
         index_finger_part.setPartRotateExtent(1, wAxis, 0, 0)
 
-        index_finger_part.setPartRotateExtent(2, uAxis, -90, 0)
+        index_finger_part.setPartRotateExtent(2, uAxis, -89, 0)
         index_finger_part.setPartRotateExtent(2, vAxis, 0, 0)
         index_finger_part.setPartRotateExtent(2, wAxis, 0, 0)
 
         # middle finger rotation limit
-        middle_finger_part.setPartRotateExtent(0, uAxis, -90, 0)
+        middle_finger_part.setPartRotateExtent(0, uAxis, -89, 0)
         middle_finger_part.setPartRotateExtent(0, vAxis, -5, 5)
         middle_finger_part.setPartRotateExtent(0, wAxis, 0, 0)
 
-        middle_finger_part.setPartRotateExtent(1, uAxis, -90, 0)
+        middle_finger_part.setPartRotateExtent(1, uAxis, -89, 0)
         middle_finger_part.setPartRotateExtent(1, vAxis, 0, 0)
         middle_finger_part.setPartRotateExtent(1, wAxis, 0, 0)
 
-        middle_finger_part.setPartRotateExtent(2, uAxis, -90, 0)
+        middle_finger_part.setPartRotateExtent(2, uAxis, -89, 0)
         middle_finger_part.setPartRotateExtent(2, vAxis, 0, 0)
         middle_finger_part.setPartRotateExtent(2, wAxis, 0, 0)
 
         # ring finger rotation limit
-        ring_finger_part.setPartRotateExtent(0, uAxis, -90, 0)
+        ring_finger_part.setPartRotateExtent(0, uAxis, -89, 0)
         ring_finger_part.setPartRotateExtent(0, vAxis, -5, 5)
         ring_finger_part.setPartRotateExtent(0, wAxis, 0, 0)
 
-        ring_finger_part.setPartRotateExtent(1, uAxis, -90, 0)
+        ring_finger_part.setPartRotateExtent(1, uAxis, -89, 0)
         ring_finger_part.setPartRotateExtent(1, vAxis, 0, 0)
         ring_finger_part.setPartRotateExtent(1, wAxis, 0, 0)
 
-        ring_finger_part.setPartRotateExtent(2, uAxis, -90, 0)
+        ring_finger_part.setPartRotateExtent(2, uAxis, -89, 0)
         ring_finger_part.setPartRotateExtent(2, vAxis, 0, 0)
         ring_finger_part.setPartRotateExtent(2, wAxis, 0, 0)
 
         # little finger rotation limit
-        little_finger_part.setPartRotateExtent(0, uAxis, -90, 0)
+        little_finger_part.setPartRotateExtent(0, uAxis, -89, 0)
         little_finger_part.setPartRotateExtent(0, vAxis, -5, 5)
         little_finger_part.setPartRotateExtent(0, wAxis, 0, 0)
 
-        little_finger_part.setPartRotateExtent(1, uAxis, -90, 0)
+        little_finger_part.setPartRotateExtent(1, uAxis, -89, 0)
         little_finger_part.setPartRotateExtent(1, vAxis, 0, 0)
         little_finger_part.setPartRotateExtent(1, wAxis, 0, 0)
 
-        little_finger_part.setPartRotateExtent(2, uAxis, -90, 0)
+        little_finger_part.setPartRotateExtent(2, uAxis, -89, 0)
         little_finger_part.setPartRotateExtent(2, vAxis, 0, 0)
         little_finger_part.setPartRotateExtent(2, wAxis, 0, 0)
