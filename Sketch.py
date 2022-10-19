@@ -236,28 +236,31 @@ class Sketch(CanvasBase):
         super(Sketch, self).OnDestroy(event)
 
     def Interrupt_MouseMoving(self, x, y):
-        width = self.size[0]
-        height = self.size[1]
+        # the default window size is 500, 472,
+        # the default left eye size is 238, 418
+        # the default right eye size is 262, 418
+        # first mark the two points that Gundam will look at
 
-        mouse_position = np.array([x, y])
-        right_eye_position = np.array([width * 0.4793388429752066, height * 0.8806941431670282])
-        left_eye_position = np.array([width * 0.5165289256198347, height * 0.8806941431670282])
-        distance_to_screen = height / 2
+        cursor_pos = np.array([x, y])
+        right_eye = np.array([self.size[0] * 0.476, self.size[1] * 0.886])  # 238, 418 / 472
+        left_eye = np.array([self.size[0] * 0.524, self.size[1] * 0.886])  # 262, 418 / 472
+        # let's simulate the fake distance
+        distance_to_screen = self.size[1] / 2
 
-        left_eye = self.model_ref.componentDict['head_left_eyeball']
-        right_eye = self.model_ref.componentDict['head_right_eyeball']
+        # then calculate the angle between the two points
+        # first right eye:
+        delta_tan = (right_eye - cursor_pos) / distance_to_screen
+        x_deg, y_deg = np.arctan(delta_tan) * 180.0 / np.pi
+        right_eye_model = self.model_ref.componentDict['head_right_eyeball']
+        right_eye_model.setCurrentAngle(-x_deg, right_eye_model.wAxis)
+        right_eye_model.setCurrentAngle(y_deg, right_eye_model.uAxis)
 
-        # right eye
-        delta = mouse_position - right_eye_position
-        y_degree, x_degree = np.arctan(delta / distance_to_screen) / np.pi * 180
-        right_eye.setCurrentAngle(-x_degree, right_eye.uAxis)
-        right_eye.setCurrentAngle(y_degree, right_eye.wAxis)
-
-        # left eye
-        delta = mouse_position - left_eye_position
-        y_degree, x_degree = np.arctan(delta / distance_to_screen) / np.pi * 180
-        left_eye.setCurrentAngle(-x_degree, left_eye.uAxis)
-        left_eye.setCurrentAngle(y_degree, left_eye.wAxis)
+        # second right eye:
+        delta_tan = (left_eye - cursor_pos) / distance_to_screen
+        x_deg, y_deg = np.arctan(delta_tan) * 180.0 / np.pi
+        left_eye_model = self.model_ref.componentDict['head_left_eyeball']
+        left_eye_model.setCurrentAngle(-x_deg, left_eye_model.wAxis)
+        left_eye_model.setCurrentAngle(y_deg, left_eye_model.uAxis)
 
         self.update()
 

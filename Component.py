@@ -218,6 +218,8 @@ class Component:
         scalingMat = self.glUtility.scale(*self.currentScaling, False)
 
         # TODO: do the Quaternion part
+        # this is the correct version
+        # self.transformationMat = parentTransformationMat @ translationMat @ self.postRotationMat @ rotationMatU @ rotationMatV @ rotationMatW @self.preRotationMat @ scalingMat
         self.transformationMat = parentTransformationMat @ self.postRotationMat @ self.preRotationMat @ rotationMatW @ rotationMatV @ rotationMatU @ translationMat @ scalingMat
 
         for c in self.children:
