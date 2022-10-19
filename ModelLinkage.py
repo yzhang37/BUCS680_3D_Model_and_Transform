@@ -66,18 +66,90 @@ class ModelLinkage(Component):
         self.componentDict['left_leg_lower'].rotate(20, self.uAxis)
         self.componentDict['left_foot'].rotate(-20, self.wAxis)
 
+        self.componentDict['right_arm_hand_thumb_0'].rotate(-30, self.uAxis)
+        self.componentDict['right_arm_hand_thumb_1'].rotate(40, self.vAxis)
+        self.componentDict['right_arm_hand_index_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_index_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_index_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_thumb_0'].rotate(-90, self.uAxis)
+        self.componentDict['left_arm_hand_thumb_1'].rotate(-80, self.vAxis)
+
     def test_case_2(self):
         self.reset_component()
-        pass
+        self.componentDict['right_arm_shoulder_panel'].rotate(50, self.uAxis)
+        self.componentDict['left_arm_shoulder_panel'].rotate(-90, self.uAxis)
+        self.componentDict['right_arm_upper'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_upper'].rotate(10, self.wAxis)
+        self.componentDict['right_arm_lower'].rotate(-30, self.uAxis)
+
+        self.componentDict['right_arm_hand_thumb_0'].rotate(-30, self.uAxis)
+        self.componentDict['right_arm_hand_thumb_1'].rotate(40, self.vAxis)
+        self.componentDict['right_arm_hand_index_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_index_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_index_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_2'].rotate(-60, self.uAxis)
+
+        self.componentDict['left_arm_hand_thumb_0'].rotate(-30, self.uAxis)
+        self.componentDict['left_arm_hand_thumb_1'].rotate(40, self.vAxis)
+        self.componentDict['left_arm_hand_index_0'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_index_1'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_index_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_middle_0'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_middle_1'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_middle_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_ring_0'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_ring_1'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_ring_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_little_0'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_little_1'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_little_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_joint'].rotate(50, self.uAxis)
+        self.componentDict['left_arm_hand_joint'].rotate(80, self.wAxis)
+
+        self.componentDict['left_arm_upper'].rotate(-80, self.uAxis)
+        self.componentDict['left_arm_upper'].rotate(00, self.vAxis)
+        self.componentDict['left_arm_upper'].rotate(-30, self.wAxis)
+
+        self.componentDict['right_leg_upper'].rotate(-45, self.wAxis)
+        self.componentDict['right_leg_upper'].rotate(-15, self.uAxis)
+        self.componentDict['right_leg_lower'].rotate(10, self.uAxis)
+
+        self.componentDict['left_leg_upper'].rotate(45, self.wAxis)
+        self.componentDict['left_leg_upper'].rotate(-15, self.uAxis)
+        self.componentDict['left_leg_lower'].rotate(10, self.uAxis)
+
+        self.componentDict['right_foot'].rotate(30, self.wAxis)
+        self.componentDict['left_foot'].rotate(-30, self.wAxis)
 
     def test_case_3(self):
         self.reset_component()
-        pass
+        for c in self.componentList:
+            c.rotate(60, self.uAxis)
+        self.componentDict['right_arm_shoulder_panel'].rotate(-60, self.uAxis)
 
     def test_case_4(self):
         self.reset_component()
-        pass
+        for c in self.componentList:
+            c.rotate(45, self.wAxis)
 
     def test_case_5(self):
         self.reset_component()
-        pass
+        for c in self.componentList:
+            c.rotate(45, self.vAxis)

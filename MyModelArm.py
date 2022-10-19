@@ -56,7 +56,7 @@ class MyModelArm(MultiColorComponent):
         if not left_handed:
             upper_arm.setRotateExtent(upper_arm.vAxis, -10, 95)
         else:
-            upper_arm.setRotateExtent(upper_arm.vAxis, -95, 10)
+            upper_arm.setRotateExtent(upper_arm.vAxis, -10, 95)
 
         # arm joint
         hidden_joint_radius = joint_radius * 1.2
