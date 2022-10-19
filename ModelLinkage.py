@@ -44,3 +44,40 @@ class ModelLinkage(Component):
         self.setDefaultAngle(-90, self.uAxis)
         self.componentList = body.componentList
         self.componentDict = body.componentDict
+
+    def reset_component(self):
+        for c in self.componentList:
+            c.reset()
+
+    def test_case_1(self):
+        self.reset_component()
+        self.componentDict['head_neck'].rotate(45, self.wAxis)
+        self.componentDict['right_arm_shoulder_panel'].rotate(-10, self.uAxis)
+        self.componentDict['right_arm_upper'].rotate(10, self.uAxis)
+        self.componentDict['right_arm_lower'].rotate(-50, self.uAxis)
+        self.componentDict['left_arm_upper'].rotate(-15, self.uAxis)
+        self.componentDict['left_arm_upper'].rotate(90, self.wAxis)
+        self.componentDict['waist'].rotate(20, self.wAxis)
+        self.componentDict['right_leg_upper'].rotate(10, self.uAxis)
+        self.componentDict['right_foot'].rotate(-10, self.uAxis)
+        self.componentDict['left_leg_upper'].rotate(-10, self.uAxis)
+        self.componentDict['left_leg_upper'].rotate(-10, self.vAxis)
+        self.componentDict['left_leg_upper'].rotate(20, self.wAxis)
+        self.componentDict['left_leg_lower'].rotate(20, self.uAxis)
+        self.componentDict['left_foot'].rotate(-20, self.wAxis)
+
+    def test_case_2(self):
+        self.reset_component()
+        pass
+
+    def test_case_3(self):
+        self.reset_component()
+        pass
+
+    def test_case_4(self):
+        self.reset_component()
+        pass
+
+    def test_case_5(self):
+        self.reset_component()
+        pass

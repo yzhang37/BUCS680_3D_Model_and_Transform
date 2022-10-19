@@ -1,6 +1,6 @@
 """
 This is the main entry of your program. Almost all things you need to implement are in this file.
-The main class Sketch inherits from CanvasBase. For the parts you need to implement, they are all marked with TODO.
+The main class Sketch inherits from CanvasBase. For the parts you need to implement, they are all marked with.
 First version Created on 09/28/2018
 
 :author: micou(Zezhou Sun)
@@ -112,6 +112,8 @@ class Sketch(CanvasBase):
     select_axis_index = -1  # index of selected axis
     select_color = [ColorType.ColorType(1, 0, 0), ColorType.ColorType(0, 1, 0), ColorType.ColorType(0, 0, 1)]
 
+    model_ref = None
+
     def __init__(self, parent):
         super(Sketch, self).__init__(parent)
         # prepare OpenGL context
@@ -151,6 +153,7 @@ class Sketch(CanvasBase):
         # Optionally, you can create a dictionary (self.cDict) to index your model's components by name.
 
         model = ModelLinkage(self, Point((0, 0, 0)), self.shaderProg)
+        self.model_ref = model
         axes = ModelAxes(self, Point((-1, -1, -1)), self.shaderProg)
 
         self.topLevelComponent.clear()
@@ -364,7 +367,6 @@ class Sketch(CanvasBase):
         :return: None
         """
 
-        ##### TODO 5: Set up your poses and finish the user interface
         # Define keyboard events to make your creature act in different ways when keys are pressed.
         # Create five unique poses to demonstrate your creature's joint rotations.
         # HINT: selecting individual components is easier if you create a dictionary of components (self.cDict)
@@ -420,6 +422,41 @@ class Sketch(CanvasBase):
             self.select_obj_index = -1
             self.select_axis_index = -1
             self.update()
+
+        if chr(keycode) in "1":
+            self.test_case_1()
+
+        if chr(keycode) in "2":
+            self.test_case_2()
+
+        if chr(keycode) in "3":
+            self.test_case_3()
+
+        if chr(keycode) in "4":
+            self.test_case_4()
+
+        if chr(keycode) in "5":
+            self.test_case_5()
+
+    def test_case_1(self):
+        self.model_ref.test_case_1()
+        self.update()
+
+    def test_case_2(self):
+        self.model_ref.test_case_2()
+        self.update()
+
+    def test_case_3(self):
+        self.model_ref.test_case_3()
+        self.update()
+
+    def test_case_4(self):
+        self.model_ref.test_case_4()
+        self.update()
+
+    def test_case_5(self):
+        self.model_ref.test_case_5()
+        self.update()
 
 
 if __name__ == "__main__":

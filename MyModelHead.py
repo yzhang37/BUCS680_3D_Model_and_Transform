@@ -32,7 +32,7 @@ class MyModelHead(MultiColorComponent):
         neck_part.setRotateExtent(neck_part.wAxis, -80, 80)
         self.addChild(neck_part)
         self.componentList.append(neck_part)
-        self.componentDict['head_neck'] = neck_part
+        self.componentDict['neck'] = neck_part
 
         # define the square head
         head_length = scale * 0.8

@@ -61,9 +61,9 @@ class MyModelWaist(MultiColorComponent):
         self.componentList.extend(leg_right.componentList)
         self.componentList.extend(leg_left.componentList)
         for k, v in leg_right.componentDict.items():
-            self.componentDict[f'right{k}'] = v
+            self.componentDict[f'right_{k}'] = v
         for k, v in leg_left.componentDict.items():
-            self.componentDict[f'left{k}'] = v
+            self.componentDict[f'left_{k}'] = v
 
 
 class MyModelLeg(MultiColorComponent):

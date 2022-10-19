@@ -51,7 +51,7 @@ class MyModelArm(MultiColorComponent):
 
         shoulder_joint.addChild(upper_arm)
         self.componentList.append(upper_arm)
-        self.componentDict['upper_arm'] = upper_arm
+        self.componentDict['upper'] = upper_arm
         upper_arm.setRotateExtent(upper_arm.uAxis, -180, 180)
         if not left_handed:
             upper_arm.setRotateExtent(upper_arm.vAxis, -10, 95)
@@ -77,7 +77,7 @@ class MyModelArm(MultiColorComponent):
         self.register_color(lower_arm, 'lower_arm', Ct.ColorType(0.85, 0.85, 0.85))
         arm_joint_helper.addChild(lower_arm)
         self.componentList.append(lower_arm)
-        self.componentDict['lower_arm'] = lower_arm
+        self.componentDict['lower'] = lower_arm
         lower_arm.setRotateExtent(lower_arm.uAxis, -180, 90)
         lower_arm.setRotateExtent(lower_arm.vAxis, 0, 0)
         lower_arm.setRotateExtent(lower_arm.wAxis, 0, 0)
@@ -102,7 +102,7 @@ class MyModelArm(MultiColorComponent):
 
         self.componentList.extend(hand.componentList)
         for k, v in hand.componentDict.items():
-            self.componentDict[f'{ "left" if left_handed else "right"}_hand_{k}'] = v
+            self.componentDict[f'hand_{k}'] = v
 
 
 class MyModelShoulderPanel(MultiColorComponent):
