@@ -1,14 +1,14 @@
-from Component import Component
+from MultiColorComponent import MultiColorComponent
 from MyModelArm import MyModelArm
 from MyModelHead import MyModelHead
 from MyModelSaber import MyModelSaber
 from MyModelLeggings import MyModelWaist
 from Point import Point
-from Shapes import Cube, Sphere
+from Shapes import Cube, Sphere, Cone
 import ColorType as Ct
 
 
-class MyModelBody(Component):
+class MyModelBody(MultiColorComponent):
     """
     Body Part
     - [x] Main Body
@@ -16,15 +16,13 @@ class MyModelBody(Component):
     - [x] Jetpack
     - [x] Saber Slot
     - [x] Sabers
-    - [ ] Shoulder Part
+    - [x] Shoulder Part
 
     """
 
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         # define body
@@ -32,16 +30,14 @@ class MyModelBody(Component):
         body1_thickness = scale * 0.6
         body1_height = scale * 0.9
         body_part_1 = Cube(Point((0, 0, 0)), shaderProg,
-                           [body1_length, body1_thickness, body1_height],
-                           Ct.RED)
+                           [body1_length, body1_thickness, body1_height], Ct.RED)
         self.addChild(body_part_1)
 
         body2_length = body1_length * 1.2
         body2_thickness = body1_thickness * 1.2
         body2_height = body1_height * 0.6
         body_part_2 = Cube(Point((0, 0, body1_height / 2 - body2_height / 3)), shaderProg,
-                           [body2_length, body2_thickness, body2_height],
-                           Ct.BLUE)
+                           [body2_length, body2_thickness, body2_height], Ct.BLUE)
         self.addChild(body_part_2)
 
         # define neck_platform and chest
@@ -74,9 +70,11 @@ class MyModelBody(Component):
              -body4_thickness * 0.48, 0)), shaderProg, scale=0.28 * scale)
         body_part_4.addChild(outlet2)
 
+        color_gundam_yellow = Ct.ColorType(217 / 255, 166 / 255, 82 / 255)
+
         neck_platform = Cube(Point((0, 0, body2_height / 2 - neck_platform_height * 0.48)), shaderProg,
                              [neck_platform_length, neck_platform_thickness, neck_platform_height],
-                             Ct.ColorType(217 / 255, 166 / 255, 82 / 255))
+                             color_gundam_yellow)
         body_part_2.addChild(neck_platform)
 
         # Connect the neck
@@ -89,16 +87,39 @@ class MyModelBody(Component):
             self.componentDict[f'head_{key}'] = value
 
         # Jetpack
+        color_medium_gray = Ct.ColorType(80 / 255, 62 / 255, 89 / 255)
+        color_deep_gray = Ct.ColorType(69 / 255, 58 / 255, 74 / 255)
         jetpack_length = body1_length * 0.9
         jetpack_thickness = body2_thickness * 0.4
         jetpack_height = body1_height * 0.8
         jetpack = Cube(Point((0, body1_thickness / 2 + jetpack_thickness / 2,
                               body1_height / 2 - jetpack_height * 0.48)), shaderProg,
                        [jetpack_length, jetpack_thickness, jetpack_height],
-                       Ct.ColorType(80 / 255, 62 / 255, 89 / 255))
+                       color_medium_gray)
         body_part_1.addChild(jetpack)
 
-        # Saber Slot
+        # add two connection points of jet
+        jet_joint_left = Sphere(Point((
+            jetpack_length / 4, jetpack_thickness / 2, -jetpack_height / 2)),
+            shaderProg, [jetpack_length * 0.08] * 3, color_deep_gray)
+        jetpack.addChild(jet_joint_left)
+        jet_joint_right = Sphere(Point((
+            -jetpack_length / 4, jetpack_thickness / 2, -jetpack_height / 2)),
+            shaderProg, [jetpack_length * 0.08] * 3, color_deep_gray)
+        jetpack.addChild(jet_joint_right)
+        jet_left = MyModelJet(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.2)
+        jet_joint_left.addChild(jet_left)
+        jet_right = MyModelJet(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.2)
+        jet_joint_right.addChild(jet_right)
+        for j, p in zip((jet_left, jet_right), ("left", "right")):
+            j.setDefaultAngle(45, j.uAxis)
+            self.componentList.append(j)
+            self.componentDict[f'{p}_jet'] = j
+            j.setRotateExtent(j.uAxis, -45, 45)
+            j.setRotateExtent(j.vAxis, -45, 45)
+            j.setRotateExtent(j.wAxis, -45, 45)
+
+    # Saber Slot
         saber_slot_size = scale * 0.1
         slot1 = Sphere(
             Point((
@@ -107,7 +128,7 @@ class MyModelBody(Component):
                 jetpack_height / 2)),
             shaderProg,
             [saber_slot_size, saber_slot_size, saber_slot_size],
-            Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+            color_deep_gray)
         jetpack.addChild(slot1)
         slot2 = Sphere(
             Point((
@@ -116,7 +137,7 @@ class MyModelBody(Component):
                 jetpack_height / 2)),
             shaderProg,
             [saber_slot_size, saber_slot_size, saber_slot_size],
-            Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
+            color_deep_gray)
         jetpack.addChild(slot2)
 
         right_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=saber_slot_size)
@@ -184,12 +205,10 @@ class MyModelBody(Component):
         self.componentDict.update(waist_part.componentDict)
 
 
-class MyModelOutlet(Component):
+class MyModelOutlet(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         num = 4
@@ -203,3 +222,21 @@ class MyModelOutlet(Component):
                      Ct.ColorType((1 - t) * r_bgn + t * r_end,
                                   (1 - t) * g_bgn + t * g_end,
                                   (1 - t) * b_bgn + t * b_end)))
+
+
+class MyModelJet(MultiColorComponent):
+    def __init__(self, parent, position, shaderProg, display_obj=None,
+                 scale=1.0):
+        super().__init__(position, display_obj)
+        self.contextParent = parent
+
+        num = 4
+        color_deep_gray = Ct.ColorType(69 / 255, 58 / 255, 74 / 255)
+        cone_height = 0.5 * scale
+
+        # the cone of the jet
+        base_cone = Cone(
+            Point((0, 0, -cone_height * 0.45)), shaderProg, [cone_height] * 3,
+            color_deep_gray)
+        self.register_color(base_cone, 'base_cone', color_deep_gray)
+        self.addChild(base_cone)
