@@ -67,7 +67,7 @@ class MyModelHead(MultiColorComponent):
         horn_base_part.addChild(horn_2)
 
         # mouth part
-        mouth = MyModelMouth(self, Point(
+        mouth = MyModelMouth(self.contextParent, Point(
             (0,
              -head_thickness / 2,
              -head_length * 0.1),
@@ -87,14 +87,14 @@ class MyModelHead(MultiColorComponent):
 
         # eyes
         eye_scale = head_length * 0.15
-        eye1 = MyModelEye(self, Point((head_length * 0.12,
+        eye1 = MyModelEye(self.contextParent, Point((head_length * 0.12,
                                        -head_thickness * 0.29 + eye_scale * 0.3,
                                        head_height * 0.08)),
                           shaderProg, scale=eye_scale,
                           eye_color=Ct.BLACK,
                           eyeball_color=Ct.ColorType(217 / 255, 166 / 255, 82 / 255))
         head_part.addChild(eye1)
-        eye2 = MyModelEye(self, Point((-head_length * 0.12,
+        eye2 = MyModelEye(self.contextParent, Point((-head_length * 0.12,
                                        -head_thickness * 0.29 + eye_scale * 0.3,
                                        head_height * 0.08)),
                           shaderProg, scale=eye_scale,

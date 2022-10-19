@@ -1,4 +1,5 @@
 from MultiColorComponent import MultiColorComponent
+from MyModelHand import MyModelHand
 from Point import Point
 from Shapes import Cube, Sphere, Cylinder
 import ColorType as Ct
@@ -26,7 +27,7 @@ class MyModelArm(MultiColorComponent):
         self.register_color(shoulder_joint, 'shoulder_joint', Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
         self.addChild(shoulder_joint)
 
-        shoulder_panel = MyModelShoulderPanel(self, Point((0, 0, 0)), shaderProg, scale=scale)
+        shoulder_panel = MyModelShoulderPanel(self.contextParent, Point((0, 0, 0)), shaderProg, scale=scale)
         self.addChild(shoulder_panel)
         self.componentList.append(shoulder_panel)
         self.componentDict['shoulder_panel'] = shoulder_panel
@@ -60,7 +61,7 @@ class MyModelArm(MultiColorComponent):
         # arm joint
         hidden_joint_radius = joint_radius * 1.2
         arm_joint_helper = Sphere(Point((0, 0, -upper_arm_height / 2 - hidden_joint_radius / 2)), shaderProg,
-                                [joint_radius * 0.01, joint_radius * 0.01, joint_radius * 0.01])
+                                  [joint_radius * 0.01, joint_radius * 0.01, joint_radius * 0.01])
         self.register_color(arm_joint_helper, 'arm_joint_helper', Ct.ColorType(0.7, 0.7, 0.7))
         upper_arm.addChild(arm_joint_helper)
 
@@ -84,10 +85,24 @@ class MyModelArm(MultiColorComponent):
         # hand joint
         hand_joint_radius = joint_radius * 0.7
         hand_joint = Sphere(Point((0, 0, -upper_arm_height / 2)), shaderProg,
-                                [hand_joint_radius, hand_joint_radius, hand_joint_radius])
+                            [hand_joint_radius, hand_joint_radius, hand_joint_radius])
         self.register_color(hand_joint, 'hand_joint', Ct.ColorType(0.4, 0.4, 0.4))
         lower_arm.addChild(hand_joint)
-        # TODO: add hand
+
+        # connect to hand
+        hand = MyModelHand(self.contextParent, Point(
+            (0, 0, hand_joint_radius)), shaderProg, scale=scale * 0.5, left_handed=left_handed)
+        hand.setDefaultAngle(180, hand.vAxis)
+
+        if left_handed:
+            hand.setDefaultAngle(90, hand.wAxis)
+        else:
+            hand.setDefaultAngle(-90, hand.wAxis)
+        hand_joint.addChild(hand)
+
+        self.componentList.extend(hand.componentList)
+        for k, v in hand.componentDict.items():
+            self.componentDict[f'{ "left" if left_handed else "right"}_hand_{k}'] = v
 
 
 class MyModelShoulderPanel(MultiColorComponent):
@@ -106,9 +121,12 @@ class MyModelShoulderPanel(MultiColorComponent):
         thickness = scale * 0.15
         length1 = scale * 0.95
         length2 = scale * 0.85
-        panel1 = Cube(Point((-scale / 2 + thickness / 2 + thickness / 4, 0, 0)), shaderProg, [thickness, length2, length2])
-        panel2 = Cube(Point((thickness / 4, -length2 / 2 + thickness / 2, length2 - length1)), shaderProg, [length2, thickness, length1])
-        panel3 = Cube(Point((thickness / 4, length2 / 2 - thickness / 2, length2 - length1)), shaderProg, [length2, thickness, length1])
+        panel1 = Cube(Point((-scale / 2 + thickness / 2 + thickness / 4, 0, 0)), shaderProg,
+                      [thickness, length2, length2])
+        panel2 = Cube(Point((thickness / 4, -length2 / 2 + thickness / 2, length2 - length1)), shaderProg,
+                      [length2, thickness, length1])
+        panel3 = Cube(Point((thickness / 4, length2 / 2 - thickness / 2, length2 - length1)), shaderProg,
+                      [length2, thickness, length1])
         panel4 = Cube(Point((thickness / 4, 0, length2 / 2 - thickness / 2)), shaderProg, [length2, length2, thickness])
 
         self.register_color(panel1, 'panel1', p2_clr)
