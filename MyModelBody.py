@@ -115,9 +115,9 @@ class MyModelBody(MultiColorComponent):
             j.setDefaultAngle(45, j.uAxis)
             self.componentList.append(j)
             self.componentDict[f'{p}_jet'] = j
-            j.setRotateExtent(j.uAxis, -45, 45)
+            j.setRotateExtent(j.uAxis, 0, 89)
             j.setRotateExtent(j.vAxis, -45, 45)
-            j.setRotateExtent(j.wAxis, -45, 45)
+            j.setRotateExtent(j.wAxis, 0, 0)
 
     # Saber Slot
         saber_slot_size = scale * 0.1
@@ -240,3 +240,12 @@ class MyModelJet(MultiColorComponent):
             color_deep_gray)
         self.register_color(base_cone, 'base_cone', color_deep_gray)
         self.addChild(base_cone)
+
+        # add fire
+        fire_length = cone_height * 6
+        fire = Sphere(
+            Point((
+                0, 0, -fire_length)), shaderProg, [
+                cone_height, cone_height, fire_length],
+            Ct.ColorType(57 / 255, 209 / 255, 209 / 255))
+        base_cone.addChild(fire)
