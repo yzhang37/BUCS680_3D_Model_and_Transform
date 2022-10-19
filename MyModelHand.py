@@ -23,12 +23,12 @@ class MyModelHand(MultiColorComponent):
         super().__init__(position, display_obj)
         self.contextParent = parent
 
+        joint_color = Ct.ColorType(0.4, 0.4, 0.4)
         color_medium_gray = Ct.ColorType(80 / 255, 62 / 255, 89 / 255)
-        color_dark_gray = Ct.ColorType(0.2, 0.2, 0.2)
 
         joint_radius = 0.12 * scale
         joint_length = joint_radius * 2
-        joint_part = Sphere(Point((0, 0, 0)), shaderProg, [0.1, 0.1, 0.1], color_medium_gray)
+        joint_part = Sphere(Point((0, 0, 0)), shaderProg, [0.1, 0.1, 0.1], joint_color)
         self.addChild(joint_part)
         self.componentList.append(joint_part)
         self.componentDict['joint'] = joint_part
@@ -39,7 +39,7 @@ class MyModelHand(MultiColorComponent):
         palm_thickness = 2.2 * joint_radius
         palm_part = Cube(Point((
             0, 0, joint_length)), shaderProg, [
-            palm_length, palm_thickness, palm_width], color_dark_gray)
+            palm_length, palm_thickness, palm_width], color_medium_gray)
 
         joint_part.addChild(palm_part)
         self.componentList.append(palm_part)

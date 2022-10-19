@@ -14,7 +14,7 @@ class MyModelFinger(MultiColorComponent):
         self.components = []
         self.contextParent = parent
 
-        color_medium_gray = Ct.ColorType(80 / 255, 62 / 255, 89 / 255)
+        color_medium_gray = Ct.ColorType(0.2, 0.2, 0.2)
         finger0 = Cylinder(Point((0, 0, 0)), shaderProg, [
             finger_radius * scale, finger_radius * scale, finger_height * scale])
         finger0.setDefaultColor(color_medium_gray)
