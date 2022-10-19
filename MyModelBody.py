@@ -23,9 +23,6 @@ class MyModelBody(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         # define body
@@ -33,16 +30,14 @@ class MyModelBody(MultiColorComponent):
         body1_thickness = scale * 0.6
         body1_height = scale * 0.9
         body_part_1 = Cube(Point((0, 0, 0)), shaderProg,
-                           [body1_length, body1_thickness, body1_height],
-                           Ct.RED)
+                           [body1_length, body1_thickness, body1_height], Ct.RED)
         self.addChild(body_part_1)
 
         body2_length = body1_length * 1.2
         body2_thickness = body1_thickness * 1.2
         body2_height = body1_height * 0.6
         body_part_2 = Cube(Point((0, 0, body1_height / 2 - body2_height / 3)), shaderProg,
-                           [body2_length, body2_thickness, body2_height],
-                           Ct.BLUE)
+                           [body2_length, body2_thickness, body2_height], Ct.BLUE)
         self.addChild(body_part_2)
 
         # define neck_platform and chest
@@ -214,9 +209,6 @@ class MyModelOutlet(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         num = 4
@@ -236,9 +228,6 @@ class MyModelJet(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         num = 4
@@ -249,4 +238,5 @@ class MyModelJet(MultiColorComponent):
         base_cone = Cone(
             Point((0, 0, -cone_height * 0.45)), shaderProg, [cone_height] * 3,
             color_deep_gray)
+        self.register_color(base_cone, 'base_cone', color_deep_gray)
         self.addChild(base_cone)

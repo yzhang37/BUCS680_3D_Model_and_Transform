@@ -21,9 +21,6 @@ class MyModelHead(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         # define neck
@@ -117,9 +114,6 @@ class MyModelMouth(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, mouth_amount=2, interval=0.1, depth=0.1):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         half_length = 0.5 * scale

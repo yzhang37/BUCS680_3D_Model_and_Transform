@@ -16,9 +16,6 @@ class MyModelWaist(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         begin_point = Cube(
@@ -81,9 +78,6 @@ class MyModelLeg(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, left_handed: bool = True):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         slight_degree = 2.5

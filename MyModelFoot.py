@@ -8,9 +8,6 @@ class MyModelFoot(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         # add red bottom
@@ -19,7 +16,8 @@ class MyModelFoot(MultiColorComponent):
         foot_bottom_height = scale * 0.3
         foot_bottom = Cube(Point((
             0, -foot_bottom_thickness / 4, -foot_bottom_height / 2)), shaderProg, [
-            foot_bottom_length, foot_bottom_thickness, foot_bottom_height], Ct.RED)
+            foot_bottom_length, foot_bottom_thickness, foot_bottom_height])
+        self.register_color(foot_bottom, 'foot_bottom', Ct.RED)
         self.addChild(foot_bottom)
 
         # add inner bottom
@@ -28,8 +26,8 @@ class MyModelFoot(MultiColorComponent):
         inner_bottom_height = scale * 0.2
         inner_bottom = Cube(Point((
             0, -inner_bottom_thickness / 4, inner_bottom_height / 2)), shaderProg, [
-            inner_bottom_length, inner_bottom_thickness, inner_bottom_height],
-            Ct.ColorType(0.85, 0.85, 0.85))
+            inner_bottom_length, inner_bottom_thickness, inner_bottom_height])
+        self.register_color(inner_bottom, 'inner_bottom', Ct.ColorType(0.85, 0.85, 0.85))
         self.addChild(inner_bottom)
 
 
@@ -37,7 +35,4 @@ class MyModelShoeCover(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, left_handed: bool = True):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent

@@ -14,9 +14,6 @@ class MyModelEye(MultiColorComponent):
     def __init__(self, parent, position, shaderProg, display_obj=None,
                  scale=1.0, eye_color=Ct.WHITE, eyeball_color=Ct.BLACK):
         super().__init__(position, display_obj)
-        self.setDefaultColor(Ct.BLACK)
-        self.componentList = []
-        self.componentDict = {}
         self.contextParent = parent
 
         # Define eye and eyeball
