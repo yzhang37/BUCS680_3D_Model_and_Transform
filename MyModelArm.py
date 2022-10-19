@@ -26,7 +26,7 @@ class MyModelArm(MultiColorComponent):
         self.register_color(shoulder_joint, 'shoulder_joint', Ct.ColorType(69 / 255, 58 / 255, 74 / 255))
         self.addChild(shoulder_joint)
 
-        shoulder_panel = MyModelShoulderPanel(self, Point((0, 0, 0)), shaderProg, scale=scale)
+        shoulder_panel = MyModelShoulderPanel(self.contextParent, Point((0, 0, 0)), shaderProg, scale=scale)
         self.addChild(shoulder_panel)
         self.componentList.append(shoulder_panel)
         self.componentDict['shoulder_panel'] = shoulder_panel

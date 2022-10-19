@@ -209,3 +209,47 @@ class Sphere(Shape):
             tOut = np.identity(4)
         self.setPreRotation(tIn)
         self.setPostRotation(tOut)
+
+
+class RoundCylinder(Shape):
+    pathname = "assets/sphere0.dae"
+    pathnameLP = "assets/sphereLP.dae"
+    data = getVertexData(pathname)
+    dataLP = getVertexData(pathnameLP)
+    vertices = data[0]
+    verticesLP = dataLP[0]
+    indices = data[1]
+    indicesLP = dataLP[1]
+
+    def __init__(self, position: Point, shaderProg, scale, color: ColorType.ColorType = ColorType.BLUE, limb=True,
+                 lowPoly=False):
+        """
+        :param position: location of the object
+        :type position: Point
+        :param shaderProg: compiled shader program
+        :type shaderProg: GLProgram
+        :param scale: set of three scale factors to be applied to each vertex
+        :type scale: list or tuple
+        :param color: vertex color to be applied uniformly
+        :type color: ColorType
+        :param limb: sets the rotation behavior of the object. if true, rotations happen "at the joint" \
+            rather than the object's center.
+            Set this to False for eyes or other ball joints.
+        :type limb: boolean
+        """
+        if lowPoly:
+            super(Sphere, self).__init__(position, shaderProg, scale, self.verticesLP.copy(), self.indicesLP.copy(),
+                                         color)
+        else:
+            super(Sphere, self).__init__(position, shaderProg, scale, self.vertices.copy(), self.indices.copy(), color)
+        # translate object by -z extent of the new component so that rotations occur @ the joint
+        # rather than around the object's true center
+        glutility = GLUtility.GLUtility()
+        if limb:
+            tIn = glutility.translate(0, 0, scale[2], False)
+            tOut = glutility.translate(0, 0, -scale[2], False)
+        else:
+            tIn = np.identity(4)
+            tOut = np.identity(4)
+        self.setPreRotation(tIn)
+        self.setPostRotation(tOut)

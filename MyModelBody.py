@@ -61,11 +61,11 @@ class MyModelBody(MultiColorComponent):
                            Ct.BLUE)
         body_part_3.addChild(body_part_4)
         # two outlets control
-        outlet1 = MyModelOutlet(self, Point(
+        outlet1 = MyModelOutlet(self.contextParent, Point(
             (-body2_length / 2 + 0.18 * scale,
              -body4_thickness * 0.48, 0)), shaderProg, scale=0.28 * scale)
         body_part_4.addChild(outlet1)
-        outlet2 = MyModelOutlet(self, Point(
+        outlet2 = MyModelOutlet(self.contextParent, Point(
             (body2_length / 2 - 0.18 * scale,
              -body4_thickness * 0.48, 0)), shaderProg, scale=0.28 * scale)
         body_part_4.addChild(outlet2)
@@ -107,9 +107,9 @@ class MyModelBody(MultiColorComponent):
             -jetpack_length / 4, jetpack_thickness / 2, -jetpack_height / 2)),
             shaderProg, [jetpack_length * 0.08] * 3, color_deep_gray)
         jetpack.addChild(jet_joint_right)
-        jet_left = MyModelJet(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.2)
+        jet_left = MyModelJet(self.contextParent, Point((0, 0, 0)), shaderProg, scale=scale * 0.2)
         jet_joint_left.addChild(jet_left)
-        jet_right = MyModelJet(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.2)
+        jet_right = MyModelJet(self.contextParent, Point((0, 0, 0)), shaderProg, scale=scale * 0.2)
         jet_joint_right.addChild(jet_right)
         for j, p in zip((jet_left, jet_right), ("left", "right")):
             j.setDefaultAngle(45, j.uAxis)
@@ -140,9 +140,9 @@ class MyModelBody(MultiColorComponent):
             color_deep_gray)
         jetpack.addChild(slot2)
 
-        right_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=saber_slot_size)
+        right_saber = MyModelSaber(self.contextParent, Point((0, 0, 0)), shaderProg, scale=saber_slot_size)
         slot1.addChild(right_saber)
-        left_saber = MyModelSaber(self, Point((0, 0, 0)), shaderProg, scale=saber_slot_size)
+        left_saber = MyModelSaber(self.contextParent, Point((0, 0, 0)), shaderProg, scale=saber_slot_size)
         slot2.addChild(left_saber)
         self.componentList.extend(right_saber.componentList)
         self.componentList.extend(left_saber.componentList)
@@ -182,9 +182,9 @@ class MyModelBody(MultiColorComponent):
         rib_part.addChild(shoulder_slot2)
 
         # shoulder connection
-        left_arm = MyModelArm(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.5, left_handed=True)
+        left_arm = MyModelArm(self.contextParent, Point((0, 0, 0)), shaderProg, scale=scale * 0.5, left_handed=True)
         shoulder_slot1.addChild(left_arm)
-        right_arm = MyModelArm(self, Point((0, 0, 0)), shaderProg, scale=scale * 0.5, left_handed=False)
+        right_arm = MyModelArm(self.contextParent, Point((0, 0, 0)), shaderProg, scale=scale * 0.5, left_handed=False)
         shoulder_slot2.addChild(right_arm)
         self.componentList.extend(right_arm.componentList)
         self.componentList.extend(left_arm.componentList)
@@ -199,7 +199,7 @@ class MyModelBody(MultiColorComponent):
             [saber_slot_size, saber_slot_size, saber_slot_size], Ct.GRAY)
         body_part_1.addChild(waist_joint)
 
-        waist_part = MyModelWaist(self, Point((0, 0, 0)), shaderProg, scale=scale)
+        waist_part = MyModelWaist(self.contextParent, Point((0, 0, 0)), shaderProg, scale=scale)
         waist_joint.addChild(waist_part)
         self.componentList.extend(waist_part.componentList)
         self.componentDict.update(waist_part.componentDict)
