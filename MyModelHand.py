@@ -69,7 +69,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'thumb_{k}'] = v
 
             index_finger_part = MyModelFinger(self.contextParent, Point((
-                -palm_length / 2 + finger_radius, 0, palm_length)), shaderProg,
+                -palm_length / 2 + finger_radius, 0, palm_length / 2)), shaderProg,
                                          finger_radius=finger_radius, finger_height=0.9 * finger_length, finger_nums=3)
             palm_part.addChild(index_finger_part)
             self.componentList.extend(index_finger_part.components)
@@ -77,7 +77,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'index_{k}'] = v
 
             middle_finger_part = MyModelFinger(self.contextParent, Point((
-                finger_radius / 3 - palm_length / 6, 0, palm_length)), shaderProg,
+                finger_radius / 3 - palm_length / 6, 0, palm_length / 2)), shaderProg,
                                           finger_radius=finger_radius, finger_height=finger_length, finger_nums=3)
             palm_part.addChild(middle_finger_part)
             self.componentList.extend(middle_finger_part.components)
@@ -85,7 +85,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'middle_{k}'] = v
 
             ring_finger_part = MyModelFinger(self.contextParent, Point((
-                palm_length / 6 - finger_radius / 3, 0, palm_length)), shaderProg,
+                palm_length / 6 - finger_radius / 3, 0, palm_length / 2)), shaderProg,
                                         finger_radius=finger_radius, finger_height=0.9 * finger_length, finger_nums=3)
             palm_part.addChild(ring_finger_part)
             self.componentList.extend(ring_finger_part.components)
@@ -93,7 +93,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'ring_{k}'] = v
 
             little_finger_part = MyModelFinger(self.contextParent, Point((
-                palm_length / 2 - finger_radius, 0, palm_length)), shaderProg,
+                palm_length / 2 - finger_radius, 0, palm_length / 2)), shaderProg,
                                           finger_radius=finger_radius, finger_height=0.8 * finger_length, finger_nums=3)
             palm_part.addChild(little_finger_part)
             self.componentList.extend(little_finger_part.components)
@@ -126,7 +126,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'thumb_{k}'] = v
 
             index_finger_part = MyModelFinger(self.contextParent, Point((
-                palm_length / 2 - finger_radius, 0, palm_length)), shaderProg,
+                palm_length / 2 - finger_radius, 0, palm_length / 2)), shaderProg,
                                               finger_radius=finger_radius, finger_height=0.9 * finger_length, finger_nums=3)
             palm_part.addChild(index_finger_part)
             self.componentList.extend(index_finger_part.components)
@@ -134,7 +134,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'index_{k}'] = v
 
             middle_finger_part = MyModelFinger(self.contextParent, Point((
-                palm_length / 6 - finger_radius / 3, 0, palm_length)), shaderProg,
+                palm_length / 6 - finger_radius / 3, 0, palm_length / 2)), shaderProg,
                                           finger_radius=finger_radius, finger_height=finger_length, finger_nums=3)
             palm_part.addChild(middle_finger_part)
             self.componentList.extend(middle_finger_part.components)
@@ -142,7 +142,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'middle_{k}'] = v
 
             ring_finger_part = MyModelFinger(self.contextParent, Point((
-                finger_radius / 3 - palm_length / 6, 0, palm_length)), shaderProg,
+                finger_radius / 3 - palm_length / 6, 0, palm_length / 2)), shaderProg,
                                         finger_radius=finger_radius, finger_height=0.9 * finger_length, finger_nums=3)
             palm_part.addChild(ring_finger_part)
             self.componentList.extend(ring_finger_part.components)
@@ -150,7 +150,7 @@ class MyModelHand(MultiColorComponent):
                 self.componentDict[f'ring_{k}'] = v
 
             little_finger_part = MyModelFinger(self.contextParent, Point((
-                -palm_length / 2 + finger_radius, 0, palm_length)), shaderProg,
+                -palm_length / 2 + finger_radius, 0, palm_length / 2)), shaderProg,
                                           finger_radius=finger_radius, finger_height=0.8 * finger_length, finger_nums=3)
             palm_part.addChild(little_finger_part)
             self.componentList.extend(little_finger_part.components)
