@@ -219,7 +219,7 @@ class Component:
 
         # TODO: do the Quaternion part
         # this is the correct version
-        # self.transformationMat = parentTransformationMat @ translationMat @ self.postRotationMat @ rotationMatU @ rotationMatV @ rotationMatW @self.preRotationMat @ scalingMat
+        # self.transformationMat = parentTransformationMat @ self.postRotationMat @ rotationMatW @ rotationMatV @ rotationMatU @ self.preRotationMat @ translationMat @ scalingMat
         self.transformationMat = parentTransformationMat @ self.postRotationMat @ self.preRotationMat @ rotationMatW @ rotationMatV @ rotationMatU @ translationMat @ scalingMat
 
         for c in self.children:
