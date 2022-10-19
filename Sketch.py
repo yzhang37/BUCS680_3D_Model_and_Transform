@@ -22,6 +22,7 @@ from CanvasBase import CanvasBase
 from GLProgram import GLProgram
 from GLBuffer import VAO, VBO, EBO, Texture
 from Quaternion import Quaternion
+import numpy as np
 import GLUtility
 
 try:
@@ -238,26 +239,23 @@ class Sketch(CanvasBase):
         width = self.size[0]
         height = self.size[1]
 
-        right_eye_position = (width * 0.4793388429752066, height * 0.8806941431670282)
-        left_eye_position = (width * 0.5165289256198347, height * 0.8806941431670282)
+        mouse_position = np.array([x, y])
+        right_eye_position = np.array([width * 0.4793388429752066, height * 0.8806941431670282])
+        left_eye_position = np.array([width * 0.5165289256198347, height * 0.8806941431670282])
         distance_to_screen = height / 2
 
         left_eye = self.model_ref.componentDict['head_left_eyeball']
         right_eye = self.model_ref.componentDict['head_right_eyeball']
 
         # right eye
-        dx = x - right_eye_position[0]
-        dy = y - right_eye_position[1]
-        x_degree = math.atan(dy / distance_to_screen) / math.pi * 180
-        y_degree = math.atan(dx / distance_to_screen) / math.pi * 180
+        delta = mouse_position - right_eye_position
+        y_degree, x_degree = np.arctan(delta / distance_to_screen) / np.pi * 180
         right_eye.setCurrentAngle(-x_degree, right_eye.uAxis)
         right_eye.setCurrentAngle(y_degree, right_eye.wAxis)
 
         # left eye
-        dx = x - left_eye_position[0]
-        dy = y - left_eye_position[1]
-        x_degree = math.atan(dy / distance_to_screen) / math.pi * 180
-        y_degree = math.atan(dx / distance_to_screen) / math.pi * 180
+        delta = mouse_position - left_eye_position
+        y_degree, x_degree = np.arctan(delta / distance_to_screen) / np.pi * 180
         left_eye.setCurrentAngle(-x_degree, left_eye.uAxis)
         left_eye.setCurrentAngle(y_degree, left_eye.wAxis)
 
