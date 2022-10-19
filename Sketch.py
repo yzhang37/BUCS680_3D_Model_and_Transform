@@ -108,7 +108,7 @@ class Sketch(CanvasBase):
     viewMat = None
     perspMat = None
 
-    select_obj_index = -1 # index of selected component in self.components
+    select_obj_index = -1  # index of selected component in self.components
     select_axis_index = -1  # index of selected axis
     select_color = [ColorType.ColorType(1, 0, 0), ColorType.ColorType(0, 1, 0), ColorType.ColorType(0, 0, 1)]
 
@@ -137,7 +137,6 @@ class Sketch(CanvasBase):
         self.cameraPhi = math.pi / 6
         self.cameraTheta = math.pi / 2
 
-        
     def InitGL(self):
         """
         Called once in order to initialize the OpenGL environemnt.
@@ -236,10 +235,33 @@ class Sketch(CanvasBase):
         super(Sketch, self).OnDestroy(event)
 
     def Interrupt_MouseMoving(self, x, y):
-        ##### TODO 6 (Extra credit for CS480): Eye movement
-        # Make your creature's eyes follow the cursor.
-        # Try to implement this using quaternions!
-        return
+        width = self.size[0]
+        height = self.size[1]
+
+        right_eye_position = (width * 0.4793388429752066, height * 0.8806941431670282)
+        left_eye_position = (width * 0.5165289256198347, height * 0.8806941431670282)
+        distance_to_screen = height / 2
+
+        left_eye = self.model_ref.componentDict['head_left_eyeball']
+        right_eye = self.model_ref.componentDict['head_right_eyeball']
+
+        # right eye
+        dx = x - right_eye_position[0]
+        dy = y - right_eye_position[1]
+        x_degree = math.atan(dy / distance_to_screen) / math.pi * 180
+        y_degree = math.atan(dx / distance_to_screen) / math.pi * 180
+        right_eye.setCurrentAngle(-x_degree, right_eye.uAxis)
+        right_eye.setCurrentAngle(y_degree, right_eye.wAxis)
+
+        # left eye
+        dx = x - left_eye_position[0]
+        dy = y - left_eye_position[1]
+        x_degree = math.atan(dy / distance_to_screen) / math.pi * 180
+        y_degree = math.atan(dx / distance_to_screen) / math.pi * 180
+        left_eye.setCurrentAngle(-x_degree, left_eye.uAxis)
+        left_eye.setCurrentAngle(y_degree, left_eye.wAxis)
+
+        self.update()
 
     def Interrupt_Scroll(self, wheelRotation):
         """
@@ -253,8 +275,8 @@ class Sketch(CanvasBase):
         wheelChange = wheelRotation / abs(wheelRotation)  # normalize wheel change
         if len(self.components) > 0 and self.select_obj_index >= 0:
             self.components[self.select_obj_index].rotate(wheelChange * 5,
-                                                            self.components[self.select_obj_index].
-                                                            axisBucket[self.select_axis_index])
+                                                          self.components[self.select_obj_index].
+                                                          axisBucket[self.select_axis_index])
         self.update()
 
     def unprojectCanvas(self, x, y, u=0.5):
@@ -371,7 +393,7 @@ class Sketch(CanvasBase):
         # Create five unique poses to demonstrate your creature's joint rotations.
         # HINT: selecting individual components is easier if you create a dictionary of components (self.cDict)
         # that can be indexed by name (e.g. self.cDict["leg1"] instead of self.components[10])
-            
+
         if keycode in [wx.WXK_RETURN]:
             # enter component editing mode
 
@@ -383,7 +405,7 @@ class Sketch(CanvasBase):
                 # set new selected component & its color
                 self.select_obj_index = (self.select_obj_index + 1) % len(self.components)
                 self.components[self.select_obj_index].setCurrentColor(self.select_color[self.select_axis_index])
-                
+
             self.update()
         if keycode in [wx.WXK_LEFT]:
             # Last rotation axis of this component
