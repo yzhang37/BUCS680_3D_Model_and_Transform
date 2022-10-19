@@ -13,6 +13,7 @@ Performance Suggestions:
 :author: micou(Zezhou Sun)
 :version: 2021.2.1
 """
+import numpy as np
 
 
 class ColorType:
@@ -74,10 +75,16 @@ class ColorType:
         """
         For ColorType comparison
         """
+
         try:
-            result = self.r == other.r and \
-                     self.g == other.g and \
-                     self.b == other.b
+            if isinstance(other, ColorType):
+                result = self.r == other.r and \
+                         self.g == other.g and \
+                         self.b == other.b
+            elif isinstance(other, np.ndarray):
+                result = self.r - other[0] < 1e-6 and \
+                            self.g - other[0] < 1e-6 and \
+                            self.b - other[0] < 1e-6
         except AttributeError:
             return False
         return result

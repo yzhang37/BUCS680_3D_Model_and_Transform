@@ -197,6 +197,7 @@ class Component:
 
         :return: None
         """
+
         if parentTransformationMat is None:
             parentTransformationMat = np.identity(4)
 
@@ -206,7 +207,7 @@ class Component:
         # otherwise, use Euler angles with rotation extents, etc.
         # this means that quaternions will always override the settings for Euler angles
 
-        if self.quat != None:
+        if self.quat is not None:
             rotationMatU = self.quat.toMatrix().transpose()
             rotationMatV = np.identity(4)
             rotationMatW = np.identity(4)
@@ -216,13 +217,8 @@ class Component:
             rotationMatW = self.glUtility.rotate(self.wAngle, self.wAxis, False)
         scalingMat = self.glUtility.scale(*self.currentScaling, False)
 
-        ##### TODO 1: Write the correct transformation to be applied to each Component
-        # Finish this function by writing one line of code that sets self.transformationMat to the correct value.
-        # HINT: you can use the @ operator to multiply numpy matrices
-        # e.g. self.transformationMat = C @ B @ A
-
-        # Change this line
-        self.transformationMat = np.identity(4)
+        # TODO: do the Quaternion part
+        self.transformationMat = parentTransformationMat @ self.postRotationMat @ self.preRotationMat @ rotationMatW @ rotationMatV @ rotationMatU @ translationMat @ scalingMat
 
         for c in self.children:
             c.update(self.transformationMat)

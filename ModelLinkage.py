@@ -15,10 +15,9 @@ Modified by Daniel Scrivener 07/2022
 """
 
 from Component import Component
+from MyModelBody import MyModelBody
 from Point import Point
 import ColorType as Ct
-from Shapes import Cube
-from Shapes import Cylinder
 import numpy as np
 
 
@@ -26,8 +25,6 @@ class ModelLinkage(Component):
     """
     Define our linkage model
     """
-
-    ##### TODO 2: Model the Creature
     # Build the class(es) of objects that could utilize your built geometric object/combination classes. E.g., you could define
     # three instances of the cyclinder trunk class and link them together to be the "limb" class of your creature. 
 
@@ -38,27 +35,121 @@ class ModelLinkage(Component):
         super().__init__(position, display_obj)
         self.contextParent = parent
 
-        linkageLength = 0.5
-        link1 = Cube(Point((0, 0, 0)), shaderProg, [0.2, 0.2, linkageLength], Ct.DARKORANGE1)
-        link2 = Cube(Point((0, 0, linkageLength)), shaderProg, [0.2, 0.2, linkageLength], Ct.DARKORANGE2)
-        link3 = Cube(Point((0, 0, linkageLength)), shaderProg, [0.2, 0.2, linkageLength], Ct.DARKORANGE3)
-        link4 = Cube(Point((0, 0, linkageLength)), shaderProg, [0.2, 0.2, linkageLength], Ct.DARKORANGE4)
-
-        self.addChild(link1)
-        link1.addChild(link2)
-        link2.addChild(link3)
-        link3.addChild(link4)
-
-        self.componentList = [link1, link2, link3, link4]
-        self.componentDict = {
-            "link1": link1,
-            "link2": link2,
-            "link3": link3,
-            "link4": link4
-        }
-
-        ##### TODO 4: Define creature's joint behavior
         # Requirements:
         #   1. Set a reasonable rotation range for each joint,
         #      so that creature won't intersect itself or bend in unnatural way
         #   2. Orientation of joint rotations for the left and right parts should mirror each other.
+        body = MyModelBody(self, Point((0, 0, 1)), shaderProg, scale=1)
+        self.addChild(body)
+        self.setDefaultAngle(-90, self.uAxis)
+        self.componentList = body.componentList
+        self.componentDict = body.componentDict
+
+    def reset_component(self):
+        for c in self.componentList:
+            c.reset()
+
+    def test_case_1(self):
+        self.reset_component()
+        self.componentDict['head_neck'].rotate(45, self.wAxis)
+        self.componentDict['right_arm_shoulder_panel'].rotate(-10, self.uAxis)
+        self.componentDict['right_arm_upper'].rotate(10, self.uAxis)
+        self.componentDict['right_arm_lower'].rotate(-50, self.uAxis)
+        self.componentDict['left_arm_upper'].rotate(-15, self.uAxis)
+        self.componentDict['left_arm_upper'].rotate(90, self.wAxis)
+        self.componentDict['waist'].rotate(20, self.wAxis)
+        self.componentDict['right_leg_upper'].rotate(10, self.uAxis)
+        self.componentDict['right_foot'].rotate(-10, self.uAxis)
+        self.componentDict['left_leg_upper'].rotate(-10, self.uAxis)
+        self.componentDict['left_leg_upper'].rotate(-10, self.vAxis)
+        self.componentDict['left_leg_upper'].rotate(20, self.wAxis)
+        self.componentDict['left_leg_lower'].rotate(20, self.uAxis)
+        self.componentDict['left_foot'].rotate(-20, self.wAxis)
+
+        self.componentDict['right_arm_hand_thumb_0'].rotate(-30, self.uAxis)
+        self.componentDict['right_arm_hand_thumb_1'].rotate(40, self.vAxis)
+        self.componentDict['right_arm_hand_index_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_index_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_index_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_thumb_0'].rotate(-90, self.uAxis)
+        self.componentDict['left_arm_hand_thumb_1'].rotate(-80, self.vAxis)
+
+    def test_case_2(self):
+        self.reset_component()
+        self.componentDict['right_arm_shoulder_panel'].rotate(50, self.uAxis)
+        self.componentDict['left_arm_shoulder_panel'].rotate(-90, self.uAxis)
+        self.componentDict['right_arm_upper'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_upper'].rotate(10, self.wAxis)
+        self.componentDict['right_arm_lower'].rotate(-30, self.uAxis)
+
+        self.componentDict['right_arm_hand_thumb_0'].rotate(-30, self.uAxis)
+        self.componentDict['right_arm_hand_thumb_1'].rotate(40, self.vAxis)
+        self.componentDict['right_arm_hand_index_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_index_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_index_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_middle_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_ring_2'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_0'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_1'].rotate(-60, self.uAxis)
+        self.componentDict['right_arm_hand_little_2'].rotate(-60, self.uAxis)
+
+        self.componentDict['left_arm_hand_thumb_0'].rotate(-30, self.uAxis)
+        self.componentDict['left_arm_hand_thumb_1'].rotate(40, self.vAxis)
+        self.componentDict['left_arm_hand_index_0'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_index_1'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_index_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_middle_0'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_middle_1'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_middle_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_ring_0'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_ring_1'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_ring_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_little_0'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_little_1'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_little_2'].rotate(-60, self.uAxis)
+        self.componentDict['left_arm_hand_joint'].rotate(50, self.uAxis)
+        self.componentDict['left_arm_hand_joint'].rotate(80, self.wAxis)
+
+        self.componentDict['left_arm_upper'].rotate(-80, self.uAxis)
+        self.componentDict['left_arm_upper'].rotate(00, self.vAxis)
+        self.componentDict['left_arm_upper'].rotate(-30, self.wAxis)
+
+        self.componentDict['right_leg_upper'].rotate(-45, self.wAxis)
+        self.componentDict['right_leg_upper'].rotate(-15, self.uAxis)
+        self.componentDict['right_leg_lower'].rotate(10, self.uAxis)
+
+        self.componentDict['left_leg_upper'].rotate(45, self.wAxis)
+        self.componentDict['left_leg_upper'].rotate(-15, self.uAxis)
+        self.componentDict['left_leg_lower'].rotate(10, self.uAxis)
+
+        self.componentDict['right_foot'].rotate(30, self.wAxis)
+        self.componentDict['left_foot'].rotate(-30, self.wAxis)
+
+    def test_case_3(self):
+        self.reset_component()
+        for c in self.componentList:
+            c.rotate(60, self.uAxis)
+        self.componentDict['right_arm_shoulder_panel'].rotate(-60, self.uAxis)
+
+    def test_case_4(self):
+        self.reset_component()
+        for c in self.componentList:
+            c.rotate(45, self.wAxis)
+
+    def test_case_5(self):
+        self.reset_component()
+        for c in self.componentList:
+            c.rotate(45, self.vAxis)

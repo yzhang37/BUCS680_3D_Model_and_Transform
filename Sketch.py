@@ -1,6 +1,6 @@
 """
 This is the main entry of your program. Almost all things you need to implement are in this file.
-The main class Sketch inherits from CanvasBase. For the parts you need to implement, they are all marked with TODO.
+The main class Sketch inherits from CanvasBase. For the parts you need to implement, they are all marked with.
 First version Created on 09/28/2018
 
 :author: micou(Zezhou Sun)
@@ -22,6 +22,7 @@ from CanvasBase import CanvasBase
 from GLProgram import GLProgram
 from GLBuffer import VAO, VBO, EBO, Texture
 from Quaternion import Quaternion
+import numpy as np
 import GLUtility
 
 try:
@@ -108,9 +109,11 @@ class Sketch(CanvasBase):
     viewMat = None
     perspMat = None
 
-    select_obj_index = -1 # index of selected component in self.components
+    select_obj_index = -1  # index of selected component in self.components
     select_axis_index = -1  # index of selected axis
     select_color = [ColorType.ColorType(1, 0, 0), ColorType.ColorType(0, 1, 0), ColorType.ColorType(0, 0, 1)]
+
+    model_ref = None
 
     def __init__(self, parent):
         super(Sketch, self).__init__(parent)
@@ -135,7 +138,6 @@ class Sketch(CanvasBase):
         self.cameraPhi = math.pi / 6
         self.cameraTheta = math.pi / 2
 
-        
     def InitGL(self):
         """
         Called once in order to initialize the OpenGL environemnt.
@@ -145,13 +147,13 @@ class Sketch(CanvasBase):
         self.shaderProg = GLProgram()
         self.shaderProg.compile()
 
-        ##### TODO 3: Initialize your model
         # You should initialize your model here.
         # self.topLevelComponent should refer to your model
         # and self.components should refer to your model's components.
         # Optionally, you can create a dictionary (self.cDict) to index your model's components by name.
 
         model = ModelLinkage(self, Point((0, 0, 0)), self.shaderProg)
+        self.model_ref = model
         axes = ModelAxes(self, Point((-1, -1, -1)), self.shaderProg)
 
         self.topLevelComponent.clear()
@@ -234,10 +236,30 @@ class Sketch(CanvasBase):
         super(Sketch, self).OnDestroy(event)
 
     def Interrupt_MouseMoving(self, x, y):
-        ##### TODO 6 (Extra credit for CS480): Eye movement
-        # Make your creature's eyes follow the cursor.
-        # Try to implement this using quaternions!
-        return
+        width = self.size[0]
+        height = self.size[1]
+
+        mouse_position = np.array([x, y])
+        right_eye_position = np.array([width * 0.4793388429752066, height * 0.8806941431670282])
+        left_eye_position = np.array([width * 0.5165289256198347, height * 0.8806941431670282])
+        distance_to_screen = height / 2
+
+        left_eye = self.model_ref.componentDict['head_left_eyeball']
+        right_eye = self.model_ref.componentDict['head_right_eyeball']
+
+        # right eye
+        delta = mouse_position - right_eye_position
+        y_degree, x_degree = np.arctan(delta / distance_to_screen) / np.pi * 180
+        right_eye.setCurrentAngle(-x_degree, right_eye.uAxis)
+        right_eye.setCurrentAngle(y_degree, right_eye.wAxis)
+
+        # left eye
+        delta = mouse_position - left_eye_position
+        y_degree, x_degree = np.arctan(delta / distance_to_screen) / np.pi * 180
+        left_eye.setCurrentAngle(-x_degree, left_eye.uAxis)
+        left_eye.setCurrentAngle(y_degree, left_eye.wAxis)
+
+        self.update()
 
     def Interrupt_Scroll(self, wheelRotation):
         """
@@ -251,8 +273,8 @@ class Sketch(CanvasBase):
         wheelChange = wheelRotation / abs(wheelRotation)  # normalize wheel change
         if len(self.components) > 0 and self.select_obj_index >= 0:
             self.components[self.select_obj_index].rotate(wheelChange * 5,
-                                                            self.components[self.select_obj_index].
-                                                            axisBucket[self.select_axis_index])
+                                                          self.components[self.select_obj_index].
+                                                          axisBucket[self.select_axis_index])
         self.update()
 
     def unprojectCanvas(self, x, y, u=0.5):
@@ -365,12 +387,11 @@ class Sketch(CanvasBase):
         :return: None
         """
 
-        ##### TODO 5: Set up your poses and finish the user interface
         # Define keyboard events to make your creature act in different ways when keys are pressed.
         # Create five unique poses to demonstrate your creature's joint rotations.
         # HINT: selecting individual components is easier if you create a dictionary of components (self.cDict)
         # that can be indexed by name (e.g. self.cDict["leg1"] instead of self.components[10])
-            
+
         if keycode in [wx.WXK_RETURN]:
             # enter component editing mode
 
@@ -382,7 +403,7 @@ class Sketch(CanvasBase):
                 # set new selected component & its color
                 self.select_obj_index = (self.select_obj_index + 1) % len(self.components)
                 self.components[self.select_obj_index].setCurrentColor(self.select_color[self.select_axis_index])
-                
+
             self.update()
         if keycode in [wx.WXK_LEFT]:
             # Last rotation axis of this component
@@ -421,6 +442,41 @@ class Sketch(CanvasBase):
             self.select_obj_index = -1
             self.select_axis_index = -1
             self.update()
+
+        if chr(keycode) in "1":
+            self.test_case_1()
+
+        if chr(keycode) in "2":
+            self.test_case_2()
+
+        if chr(keycode) in "3":
+            self.test_case_3()
+
+        if chr(keycode) in "4":
+            self.test_case_4()
+
+        if chr(keycode) in "5":
+            self.test_case_5()
+
+    def test_case_1(self):
+        self.model_ref.test_case_1()
+        self.update()
+
+    def test_case_2(self):
+        self.model_ref.test_case_2()
+        self.update()
+
+    def test_case_3(self):
+        self.model_ref.test_case_3()
+        self.update()
+
+    def test_case_4(self):
+        self.model_ref.test_case_4()
+        self.update()
+
+    def test_case_5(self):
+        self.model_ref.test_case_5()
+        self.update()
 
 
 if __name__ == "__main__":
