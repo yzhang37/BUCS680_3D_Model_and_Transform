@@ -9,7 +9,7 @@ In this program, five preset pose was included, by pressing key 1 - 5. And the s
 
 ### Original Sketch
 
-![Original](/Users/l/Projects/CS680_PA2/images/original_sketch.png)
+![Original](./images/original_sketch.png)
 
 ### Poses (Key 1 - 5)
 
@@ -23,15 +23,15 @@ In this program, five preset pose was included, by pressing key 1 - 5. And the s
 
 3. All components attempt U-axis rotation
 
-   ![pose3](/Users/l/Projects/CS680_PA2/images/pose3.png)
+   ![pose3](./images/pose3.png)
 
 4. All components attempt W-axis rotation
 
-   ![pose4](/Users/l/Projects/CS680_PA2/images/pose4.png)
+   ![pose4](./images/pose4.png)
 
 5. All components attempt V-axis rotation
 
-   ![pose5](/Users/l/Projects/CS680_PA2/images/pose5.png)
+   ![pose5](./images/pose5.png)
 
 
 ### Eyecatching
